@@ -212,10 +212,40 @@
       const staggerTargets = [
         { sel: '.mosaic .tile',            from: 'start', amount: 0.6 },
         { sel: '.service-icons li',        from: 'start', amount: 0.4 },
-        { sel: '.steps .step',             from: 'start', amount: 0.5 },
         { sel: '.stats-strip .stat',       from: 'start', amount: 0.5 },
         { sel: '.faq-list .faq-item',      from: 'start', amount: 0.4 },
       ];
+
+      /* Process timeline: line draws, markers pop in, content fades up */
+      const timeline = document.querySelector('[data-timeline]');
+      if (timeline) {
+        gsap.set('.timeline-marker', { scale: 0, autoAlpha: 0 });
+        gsap.set('.timeline-content', { y: 16, autoAlpha: 0 });
+        gsap.set('.timeline-progress', { scaleX: 0 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: timeline, start: 'top 78%', once: true },
+        });
+        tl.to('.timeline-progress', {
+            scaleX: 1,
+            duration: 1.1,
+            ease: 'power2.inOut',
+          })
+          .to('.timeline-marker', {
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.55,
+            stagger: 0.18,
+            ease: 'back.out(1.7)',
+          }, '-=0.85')
+          .to('.timeline-content', {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.55,
+            stagger: 0.15,
+            ease: 'power2.out',
+          }, '-=0.45');
+      }
 
       /* Count-up animation for stats — triggers once on scroll-into-view */
       const nfmt = new Intl.NumberFormat('el-GR');
@@ -412,8 +442,8 @@
         `Ονοματεπώνυμο: ${fd.get('name') || ''}`,
         `Τηλέφωνο: ${fd.get('phone') || ''}`,
         `Υπηρεσία: ${fd.get('service') || ''}`,
-        `Αφετηρία → προορισμός: ${fd.get('route') || ''}`,
-        `Σημειώσεις: ${fd.get('notes') || ''}`,
+        `Αφετηρία: ${fd.get('from') || ''}`,
+        `Προορισμός: ${fd.get('to') || ''}`,
       ];
       const subject = encodeURIComponent('Αίτημα προσφοράς από το νέο site');
       const body = encodeURIComponent(lines.join('\n'));
