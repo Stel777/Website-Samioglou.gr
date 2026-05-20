@@ -63,7 +63,6 @@
 }
 
 .gmap path {
-  fill: var(--gm-fill-empty);
   stroke: var(--gm-stroke);
   stroke-width: 0.6;
   stroke-linejoin: round;
@@ -71,6 +70,13 @@
   transition: filter 0.18s ease, transform 0.18s ease, stroke 0.18s ease;
   transform-box: fill-box;
   transform-origin: center;
+}
+/* Empty fill ONLY for paths without an inline fill attribute.
+   CSS rules beat SVG presentation attributes, so the original
+   `fill: var(--gm-fill-empty)` was overriding the colored fills
+   the component sets via setAttribute('fill', color). */
+.gmap path:not([fill]) {
+  fill: var(--gm-fill-empty);
 }
 
 .gmap path:hover {
