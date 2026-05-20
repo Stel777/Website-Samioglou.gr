@@ -664,13 +664,8 @@
     });
 
     if (!map) return;
-
-    /* Zoom the SVG viewBox to Attica (component renders full-Greece by default) */
-    const ATTICA_VIEWBOX = '380 470 220 130';
-    requestAnimationFrame(() => {
-      const svg = host.querySelector('svg');
-      if (svg) svg.setAttribute('viewBox', ATTICA_VIEWBOX);
-    });
+    /* No viewBox override — let the component render the full Greece map.
+       Attica coverage will sit in the southern mainland as a visible green cluster. */
   }
 
   /* ── Boot ─────────────────────────────────────────────────── */
