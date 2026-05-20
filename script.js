@@ -664,8 +664,14 @@
     });
 
     if (!map) return;
-    /* No viewBox override — let the component render the full Greece map.
-       Attica coverage will sit in the southern mainland as a visible green cluster. */
+
+    /* Medium zoom — Athens centered, with Peloponnese SW and Euboea NE visible
+       as context. Full Greece is too zoomed-out, tight Attica was too cropped. */
+    const MEDIUM_VIEWBOX = '300 390 360 280';
+    requestAnimationFrame(() => {
+      const svg = host.querySelector('svg');
+      if (svg) svg.setAttribute('viewBox', MEDIUM_VIEWBOX);
+    });
   }
 
   /* ── Boot ─────────────────────────────────────────────────── */
