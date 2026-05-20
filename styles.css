@@ -1090,28 +1090,223 @@ a.topbar-link:focus-visible {
   --gm-fill-empty: #2c3a55;     /* lighter slate so non-covered land is visible */
   --gm-stroke-hover: var(--gold);
 }
+/* ── Area finder ──────────────────────────────────────────── */
+.area-finder {
+  display: grid;
+  gap: 1.1rem;
+  margin: 0 0 1.5rem;
+  max-width: 780px;
+}
 .area-search {
   position: relative;
-  max-width: 640px;
-  margin: 0 0 1.5rem;
+  display: block;
 }
+.area-search-icon {
+  position: absolute;
+  left: 1.15rem;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: color 220ms ease;
+}
+.area-search:focus-within .area-search-icon { color: var(--accent); }
 .area-search input {
   width: 100%;
-  min-height: 52px;
-  padding: 0 1rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  min-height: 64px;
+  padding: 0 3.5rem 0 3.2rem;
   background: var(--paper);
-  font-size: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--ink);
+  box-shadow: 0 6px 18px rgba(15,28,46,0.06);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
+.area-search input::placeholder { color: var(--muted); }
 .area-search input:focus {
-  outline: 3px solid rgba(14,79,134,0.18);
+  outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(14,79,134,0.14), 0 8px 22px rgba(15,28,46,0.08);
 }
-.area-result-count {
-  margin: 0.5rem 0 0;
+.area-search-clear {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
   color: var(--muted);
-  font-size: 0.86rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+.area-search-clear:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+.area-search-clear svg { width: 14px; height: 14px; }
+
+/* Live answer card */
+.area-answer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: var(--radius);
+  min-height: 76px;
+  transition: background 240ms ease, border-color 240ms ease;
+}
+.area-answer[data-state="info"] {
+  background: linear-gradient(120deg, rgba(14,79,134,0.05), rgba(14,79,134,0.02));
+  border-color: rgba(14,79,134,0.18);
+}
+.area-answer[data-state="success"] {
+  background: linear-gradient(120deg, rgba(74,222,128,0.10), rgba(74,222,128,0.03));
+  border-color: rgba(74,222,128,0.36);
+}
+.area-answer[data-state="warn"] {
+  background: linear-gradient(120deg, rgba(245,158,11,0.10), rgba(245,158,11,0.03));
+  border-color: rgba(245,158,11,0.36);
+}
+.answer-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.area-answer[data-state="info"] .answer-icon {
+  background: rgba(14,79,134,0.14);
+  color: var(--accent);
+}
+.area-answer[data-state="success"] .answer-icon {
+  background: rgba(74,222,128,0.20);
+  color: #15803d;
+}
+.area-answer[data-state="warn"] .answer-icon {
+  background: rgba(245,158,11,0.20);
+  color: #b45309;
+}
+.answer-icon svg { width: 22px; height: 22px; }
+.answer-content { display: grid; gap: 0.15rem; min-width: 0; }
+.answer-content strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.04rem;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.answer-content span {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.answer-region {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--accent) !important;
+}
+.area-answer .btn {
+  min-height: 44px;
+  padding: 0.6rem 1.05rem;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+/* Popular quick-picks */
+.area-popular {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.area-popular-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-right: 0.3rem;
+}
+.popular-chip {
+  padding: 0.5rem 0.95rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+.popular-chip:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.popular-chip:focus-visible {
+  outline: 3px solid rgba(14,79,134,0.32);
+  outline-offset: 2px;
+}
+
+/* Browse-all collapse */
+.area-browse {
+  margin-top: 1.6rem;
+}
+.area-browse > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.1rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: background 200ms ease, border-color 200ms ease;
+}
+.area-browse > summary:hover {
+  background: var(--soft);
+  border-color: rgba(14,79,134,0.32);
+}
+.area-browse > summary::-webkit-details-marker { display: none; }
+.area-browse-chev {
+  width: 16px;
+  height: 16px;
+  transition: transform 220ms ease;
+}
+.area-browse[open] .area-browse-chev { transform: rotate(180deg); }
+.area-browse > .area-regions { margin-top: 1.2rem; }
+
+@media (max-width: 640px) {
+  .area-search input { font-size: 0.96rem; padding: 0 3rem 0 3rem; min-height: 56px; }
+  .area-answer {
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    padding: 0.9rem 1rem;
+  }
+  .area-answer .btn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+  .area-popular-label { width: 100%; margin-bottom: 0.2rem; }
+  .popular-chip { font-size: 0.86rem; padding: 0.42rem 0.85rem; }
 }
 .area-regions {
   display: grid;

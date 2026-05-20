@@ -400,19 +400,45 @@
           <div id="coverage-map" class="gmap-sea" aria-label="Χάρτης κάλυψης"></div>
         </div>
 
-        <div class="area-search">
-          <label for="area-filter" class="sr-only">Αναζήτηση περιοχής</label>
-          <svg class="area-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
-          </svg>
-          <input id="area-filter" type="search" placeholder="Βρείτε την περιοχή σας — π.χ. Κηφισιά, Γλυφάδα, Πειραιάς" data-area-filter>
-          <p class="area-result-count" data-area-count></p>
+        <!-- Area finder: search + live answer + popular chips -->
+        <div class="area-finder">
+          <label class="area-search" for="area-filter">
+            <span class="sr-only">Αναζήτηση περιοχής</span>
+            <svg class="area-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+            <input id="area-filter" type="search" placeholder="Πληκτρολογήστε την περιοχή σας — π.χ. Κηφισιά, Γλυφάδα, Πειραιάς" data-area-filter autocomplete="off">
+            <button class="area-search-clear" type="button" data-area-clear hidden aria-label="Καθαρισμός αναζήτησης">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </label>
+
+          <!-- Live answer card: morphs based on the search state -->
+          <div class="area-answer" data-area-answer aria-live="polite"></div>
+
+          <!-- Popular quick-picks: click to fill the search instantly -->
+          <div class="area-popular" aria-label="Δημοφιλείς περιοχές">
+            <span class="area-popular-label">Δημοφιλείς:</span>
+            <button type="button" class="popular-chip" data-area-pick="Κηφισιά">Κηφισιά</button>
+            <button type="button" class="popular-chip" data-area-pick="Γλυφάδα">Γλυφάδα</button>
+            <button type="button" class="popular-chip" data-area-pick="Μαρούσι">Μαρούσι</button>
+            <button type="button" class="popular-chip" data-area-pick="Χαλάνδρι">Χαλάνδρι</button>
+            <button type="button" class="popular-chip" data-area-pick="Καλλιθέα">Καλλιθέα</button>
+            <button type="button" class="popular-chip" data-area-pick="Πειραιάς">Πειραιάς</button>
+            <button type="button" class="popular-chip" data-area-pick="Πλάκα">Πλάκα</button>
+            <button type="button" class="popular-chip" data-area-pick="Νέα Σμύρνη">Νέα Σμύρνη</button>
+          </div>
         </div>
 
-        <div class="area-regions" data-area-regions>
-          <!-- Filled by script.js -->
-        </div>
+        <!-- Browse all regions (collapsible) -->
+        <details class="area-browse" data-area-browse>
+          <summary>
+            <span>Δείτε όλες τις περιοχές κατά ζώνη</span>
+            <svg class="area-browse-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="area-regions" data-area-regions></div>
+        </details>
       </div>
     </section>
 

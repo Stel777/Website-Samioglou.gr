@@ -214,6 +214,7 @@
         { sel: '.service-icons li',        from: 'start', amount: 0.4 },
         { sel: '.stats-strip .stat',       from: 'start', amount: 0.5 },
         { sel: '.faq-list .faq-item',      from: 'start', amount: 0.4 },
+        { sel: '.popular-chip',            from: 'start', amount: 0.35 },
       ];
 
       /* Process timeline: line draws, markers pop in, content fades up */
@@ -330,68 +331,174 @@
     });
   }
 
-  /* ── Areas: render grouped regions + search filter ──────── */
+  /* ── Areas: search + live answer card + popular chips + region pills ── */
   function initAreas() {
     const container = $('[data-area-regions]');
-    const filter = $('[data-area-filter]');
-    const counter = $('[data-area-count]');
-    if (!container) return;
+    const filter    = $('[data-area-filter]');
+    const clearBtn  = $('[data-area-clear]');
+    const answer    = $('[data-area-answer]');
+    const browse    = $('[data-area-browse]');
+    const popular   = $$('.popular-chip');
+    if (!container || !filter) return;
 
-    function render(q = '') {
+    const ICONS = {
+      info:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+      success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>',
+      warn:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 22h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    };
+
+    function regionOf(area) {
+      for (const r of AREA_REGIONS) if (r.items.includes(area)) return r.label;
+      return '';
+    }
+
+    const totalAreas = AREA_REGIONS.reduce((s, r) => s + r.items.length, 0);
+
+    /* ── Answer card ─── */
+    function updateAnswer(q) {
       const nq = normalize(q);
-      container.innerHTML = '';
-      let total = 0;
+      let state, html;
+
+      if (!nq) {
+        state = 'info';
+        html = `
+          <div class="answer-icon">${ICONS.info}</div>
+          <div class="answer-content">
+            <strong>Καλύπτουμε ${totalAreas} περιοχές στην Αττική</strong>
+            <span>Πληκτρολογήστε την περιοχή σας ή διαλέξτε από τις δημοφιλείς.</span>
+          </div>`;
+      } else {
+        const matches = (window.SAMIOGLOU_ALL_AREAS || [])
+          .filter((a) => normalize(a).includes(nq));
+
+        if (matches.length === 0) {
+          state = 'warn';
+          html = `
+            <div class="answer-icon">${ICONS.warn}</div>
+            <div class="answer-content">
+              <strong>Δεν εντοπίσαμε «${escapeHtml(q)}»</strong>
+              <span>Ίσως γράφεται διαφορετικά. Εξυπηρετούμε όλη την Αττική — μιλήστε μας.</span>
+            </div>
+            <a class="btn btn-primary" href="tel:+302108611507">Καλέστε μας</a>`;
+        } else if (matches.length === 1) {
+          state = 'success';
+          html = `
+            <div class="answer-icon">${ICONS.success}</div>
+            <div class="answer-content">
+              <strong>Καλύπτουμε ${escapeHtml(matches[0])}!</strong>
+              <span class="answer-region">${escapeHtml(regionOf(matches[0]))}</span>
+            </div>
+            <a class="btn btn-primary" href="#quote">Λάβετε προσφορά</a>`;
+        } else {
+          state = 'success';
+          html = `
+            <div class="answer-icon">${ICONS.success}</div>
+            <div class="answer-content">
+              <strong>${matches.length} περιοχές ταιριάζουν</strong>
+              <span>Όλες καλύπτονται — δείτε τις παρακάτω.</span>
+            </div>
+            <a class="btn btn-primary" href="#quote">Λάβετε προσφορά</a>`;
+        }
+      }
+
+      answer.dataset.state = state;
+      answer.innerHTML = html;
+
+      if (typeof gsap !== 'undefined') {
+        gsap.fromTo(answer,
+          { scale: 0.97, autoAlpha: 0.55 },
+          { scale: 1, autoAlpha: 1, duration: 0.32, ease: 'back.out(1.4)', clearProps: 'transform' }
+        );
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+
+    /* ── Region pills ─── */
+    function renderRegions(q) {
+      const nq = normalize(q);
+      const frag = document.createDocumentFragment();
 
       AREA_REGIONS.forEach((region) => {
         const matching = region.items.filter((a) => normalize(a).includes(nq));
         if (matching.length === 0 && nq !== '') return;
-        total += matching.length;
 
         const details = document.createElement('details');
         details.className = 'area-region';
         if (nq !== '' || region.label === 'Κέντρο Αθήνας') details.open = true;
 
         const summary = document.createElement('summary');
-        summary.innerHTML = `${region.label}<span class="area-region-count">${matching.length}</span>`;
+        summary.innerHTML =
+          `${region.label}<span class="area-region-count">${matching.length}</span>`;
         details.appendChild(summary);
 
         const list = document.createElement('div');
         list.className = 'area-list';
         matching.forEach((a) => {
           const span = document.createElement('span');
-          if (nq === '') {
+          if (!nq) {
             span.textContent = a;
           } else {
-            // Highlight match
             const idx = normalize(a).indexOf(nq);
-            if (idx >= 0) {
-              span.innerHTML =
-                a.slice(0, idx) +
-                '<mark>' + a.slice(idx, idx + nq.length) + '</mark>' +
-                a.slice(idx + nq.length);
-            } else {
-              span.textContent = a;
-            }
+            span.innerHTML = idx >= 0
+              ? `${escapeHtml(a.slice(0, idx))}<mark>${escapeHtml(a.slice(idx, idx + nq.length))}</mark>${escapeHtml(a.slice(idx + nq.length))}`
+              : escapeHtml(a);
           }
           list.appendChild(span);
         });
         details.appendChild(list);
-        container.appendChild(details);
+        frag.appendChild(details);
       });
 
-      if (counter) {
-        if (nq === '') {
-          counter.textContent = `Συνολικά ${AREA_REGIONS.reduce((s, r) => s + r.items.length, 0)} περιοχές καλύπτονται.`;
-        } else {
-          counter.textContent = total === 0
-            ? `Δεν βρέθηκε κάποια περιοχή για «${q}». Επικοινωνήστε μαζί μας — εξυπηρετούμε όλη την Αττική.`
-            : `${total} ${total === 1 ? 'περιοχή ταιριάζει' : 'περιοχές ταιριάζουν'} με «${q}».`;
-        }
+      container.innerHTML = '';
+      container.appendChild(frag);
+
+      // GSAP stagger reveal on the new pills
+      if (typeof gsap !== 'undefined') {
+        const pills = container.querySelectorAll('.area-list span');
+        gsap.fromTo(pills,
+          { autoAlpha: 0, y: 6 },
+          { autoAlpha: 1, y: 0, duration: 0.3, stagger: { each: 0.008, from: 'start' }, ease: 'power3.out' }
+        );
       }
     }
 
-    render();
-    if (filter) filter.addEventListener('input', (e) => render(e.target.value));
+    function update(q) {
+      if (clearBtn) clearBtn.hidden = !q;
+      // Auto-open the browse section when there's a search query
+      if (browse && q) browse.open = true;
+      updateAnswer(q);
+      renderRegions(q);
+    }
+
+    filter.addEventListener('input', (e) => update(e.target.value));
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        filter.value = '';
+        update('');
+        filter.focus();
+      });
+    }
+
+    popular.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const area = chip.dataset.areaPick || chip.textContent.trim();
+        filter.value = area;
+        update(area);
+        filter.focus();
+        // Reveal feedback on the chip
+        if (typeof gsap !== 'undefined') {
+          gsap.fromTo(chip, { scale: 0.95 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+        }
+      });
+    });
+
+    update('');
   }
 
   /* ── Font picker (dev-only — show with ?dev=1) ───────────── */
