@@ -7,6 +7,10 @@
   <title>Σαμιόγλου · Μεταφορές Μετακομίσεις Αθήνα</title>
   <meta name="description" content="Μεταφορές, μετακομίσεις, φορτοταξί, συσκευασίες και αποθήκευση οικοσκευών στην Αθήνα, την Αττική και όλη την Ελλάδα. Σαμιόγλου Χάρης.">
 
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/favicon-180.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="image" href="assets/moving-hero.jpg" fetchpriority="high">
@@ -23,10 +27,28 @@
 
     <div class="topbar">
       <div class="topbar-inner">
-        <span class="topbar-cta">Καλέστε μας τώρα —</span>
-        <a class="topbar-phone" href="tel:+302108611507">📞 210 861 1507</a>
-        <a href="mailto:info@samioglou.gr">✉ info@samioglou.gr</a>
-        <span class="topbar-hours">🕒 Δευ–Παρ · 9:00–18:00</span>
+        <a class="topbar-link topbar-link-primary" href="tel:+302108611507">
+          <svg class="topbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span>210 861 1507</span>
+        </a>
+        <span class="topbar-sep" aria-hidden="true"></span>
+        <a class="topbar-link" href="mailto:info@samioglou.gr">
+          <svg class="topbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          <span>info@samioglou.gr</span>
+        </a>
+        <span class="topbar-sep" aria-hidden="true"></span>
+        <span class="topbar-link topbar-link-muted">
+          <svg class="topbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Δευ–Παρ · 9:00–18:00</span>
+        </span>
       </div>
     </div>
 
@@ -134,12 +156,9 @@
       <div class="container stats-strip-inner">
         <div class="stat">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M16 3h5v5"/>
-            <path d="M21 3l-7.5 7.5"/>
-            <path d="M21 14v5a2 2 0 0 1-2 2h-5"/>
-            <path d="M3 14v5a2 2 0 0 0 2 2h5"/>
-            <path d="M3 10V5a2 2 0 0 1 2-2h5"/>
-            <path d="M8 12l3 3 5-5"/>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+            <path d="m9 14 2 2 4-4"/>
           </svg>
           <strong class="stat-num" data-count="32000">0</strong>
           <span>Ολοκληρωμένες μεταφορές</span>
@@ -376,22 +395,48 @@
         <div class="faq-list">
           <details class="faq-item" open>
             <summary>Ποιες είναι οι πρώτες πληροφορίες που χρειάζεστε;</summary>
-            <p>Τι θέλετε να μεταφέρετε, περίπου πόσα αντικείμενα, τι είδους είναι, καθώς και
-              την αφετηρία και τον προορισμό.</p>
+            <p>Καλό είναι να γνωρίζετε ακριβώς τι θέλετε να μεταφέρετε. Είναι πολύ σημαντικό να
+              γνωρίζουμε περίπου τον αριθμό των αντικειμένων καθώς και το είδος τους. Μια άλλη
+              πληροφορία που μας είναι χρήσιμη είναι ο τόπος αφετηρίας και προορισμού.</p>
           </details>
           <details class="faq-item">
             <summary>Ποιες περιοχές εξυπηρετείτε;</summary>
-            <p>Πρωταρχικά όλη την Αττική. Κατόπιν συνεννόησης εξυπηρετούμε όλη την Ελλάδα.</p>
+            <p>Στην ουσία εξυπηρετούμε όλη την Ελλάδα — όλα όμως γίνονται κατόπιν συνεννόησης.
+              Πρωταρχικά καλύπτουμε όλη την Αττική.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Πόσο χρόνο χρειάζεστε για να μας δώσετε προσφορά;</summary>
+            <p>Αρχικά, όλα εξαρτώνται από εσάς — από τις πληροφορίες που θα μας δώσετε και από
+              τον χρόνο που θα μας διαθέσετε για να εκτιμήσουμε τα αντικείμενα. Το προσωπικό μας
+              θα βρίσκεται κοντά σας το γρηγορότερο δυνατό, και αντίστοιχα θα σας δοθεί η προσφορά μας.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Σε ποιους απευθύνεστε;</summary>
+            <p>Απευθυνόμαστε σε ιδιώτες, επαγγελματίες, φοιτητές… σε όλους σας. Εξάλλου ο
+              καθένας από εμάς θα χρειαστεί, έστω και μια φορά στη ζωή του, να μετακομίσει κάτι.</p>
           </details>
           <details class="faq-item">
             <summary>Διαθέτετε ανυψωτικά μηχανήματα;</summary>
-            <p>Ναι. Σύγχρονος εξοπλισμός, ανυψωτικά μηχανήματα και φορτηγά διαφορετικών μεγεθών
-              ανάλογα με τη μεταφορά.</p>
+            <p>Ναι. Η εταιρία μας διαθέτει όλο τον σύγχρονο εξοπλισμό που χρειάζεται μια
+              εξελισσόμενη εταιρία μεταφορών-μετακομίσεων: ανυψωτικά μηχανήματα και φορτηγά
+              διαφορετικών μεγεθών ανάλογα με το αν η μεταφορά είναι μεγάλη ή μικρή.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Αναλαμβάνετε τη συσκευασία;</summary>
+            <p>Ναι. Μπορούμε να αναλάβουμε και τη συσκευασία των αντικειμένων με την προσοχή
+              που τους αναλογεί. Η προτεραιότητά μας είναι η ασφάλεια των μεταφερόμενων
+              αντικειμένων ώστε να καταλήξουν στον προορισμό τους χωρίς φθορές.</p>
           </details>
           <details class="faq-item">
             <summary>Αναλαμβάνετε ειδικές μεταφορές;</summary>
-            <p>Ναι — μουσικά όργανα, ιατρικά μηχανήματα, υπολογιστές, έργα τέχνης και
-              αντικείμενα μεγάλης αξίας, με τις κατάλληλες ειδικές συσκευασίες.</p>
+            <p>Ναι — μουσικά όργανα, ιατρικά μηχανήματα, ηλεκτρονικούς υπολογιστές, έργα τέχνης
+              και αντικείμενα μεγάλης αξίας, με τις κατάλληλες ειδικές συσκευασίες.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Πόσο κοστίζει μια μεταφορά ή μετακόμιση;</summary>
+            <p>Το κόστος εξαρτάται από τον όγκο και το είδος των αντικειμένων, την απόσταση και
+              τις ειδικές απαιτήσεις (π.χ. ανυψωτικό, συσκευασία, αποθήκευση). Επικοινωνήστε
+              μαζί μας για μια δωρεάν, οικονομικά συμφέρουσα εκτίμηση.</p>
           </details>
         </div>
       </div>
@@ -423,21 +468,66 @@
 
   <!-- ───── Footer ──────────────────────────────────────── -->
   <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <strong>Σαμιόγλου Χάρης</strong>
-        <span>Μεταφορές · Μετακομίσεις</span>
+    <div class="container footer-grid">
+
+      <div class="footer-col footer-brand-col">
+        <img class="footer-logo" src="assets/samioglou-logo.png" alt="Σαμιόγλου" width="220" height="65" decoding="async">
+        <p class="footer-tagline">Μεταφορές · Μετακομίσεις στην Αθήνα και όλη την Ελλάδα.</p>
+        <div class="footer-social" aria-label="Κοινωνικά δίκτυα">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/>
+            </svg>
+          </a>
+        </div>
       </div>
-      <nav aria-label="Σύνδεσμοι υποσέλιδου">
-        <a href="#services">Υπηρεσίες</a>
-        <a href="#areas">Περιοχές</a>
-        <a href="#faq">FAQ</a>
-        <a href="#quote">Προσφορά</a>
-      </nav>
-      <div class="footer-contact">
-        <a href="tel:+302108611507">+30 210 861 1507</a>
-        <a href="mailto:info@samioglou.gr">info@samioglou.gr</a>
+
+      <div class="footer-col">
+        <h4>Στοιχεία Επικοινωνίας</h4>
+        <address class="footer-address">
+          <span>Πυρσόγιαννης 5, 104 46</span>
+          <span>Αθήνα, Ελλάδα</span>
+          <a href="tel:+302108611507">Τηλ.: +30 210 861 1507</a>
+          <span>Fax: +30 210 861 1507</span>
+          <a href="mailto:info@samioglou.gr">E-Mail: info@samioglou.gr</a>
+        </address>
       </div>
+
+      <div class="footer-col">
+        <h4>Χρήσιμοι Σύνδεσμοι</h4>
+        <nav class="footer-nav" aria-label="Σύνδεσμοι υποσέλιδου">
+          <a href="#top">Αρχική</a>
+          <a href="#services">Υπηρεσίες</a>
+          <a href="#services">Φορτοταξί</a>
+          <a href="#quote">Πάρε προσφορά</a>
+          <a href="#contact">Επικοινωνία</a>
+        </nav>
+      </div>
+
+      <div class="footer-col">
+        <h4>Εγγραφή στο Newsletter</h4>
+        <form class="footer-newsletter" aria-label="Εγγραφή στο newsletter">
+          <input type="email" name="email" placeholder="Συμπληρώστε το E-mail σας" required autocomplete="email">
+          <button class="btn btn-primary" type="submit">Εγγραφή</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2012–2026 Samioglou.gr — All rights reserved</p>
     </div>
   </footer>
 
