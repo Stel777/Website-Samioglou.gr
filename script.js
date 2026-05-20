@@ -598,65 +598,24 @@
       regionsData[r.id] = r.id === 'EL30' ? 1.0 : 0.35;
     });
 
-    // Municipalities (326): match each feature against our 165 covered areas.
-    // Two strategies, applied in order:
-    //   (a) Greek common-prefix on m.el (handles genitive: Κηφισιάς → Κηφισιά)
-    //   (b) Latin transliteration on m.en (Glyfada / Kifisia / Kallithea / Pireas …)
-    const GR2LAT = {
-      'α':'a','β':'v','γ':'g','δ':'d','ε':'e','ζ':'z','η':'i','θ':'th',
-      'ι':'i','κ':'k','λ':'l','μ':'m','ν':'n','ξ':'x','ο':'o','π':'p',
-      'ρ':'r','σ':'s','τ':'t','υ':'y','φ':'f','χ':'ch','ψ':'ps','ω':'o','ς':'s',
-    };
-    function translit(s) {
-      if (!s) return '';
-      let out = '';
-      const lower = normalize(s);
-      for (let i = 0; i < lower.length; i++) {
-        const c = lower[i];
-        out += GR2LAT[c] || c;
-      }
-      return out;
-    }
-
-    const coveredArr = (window.SAMIOGLOU_ALL_AREAS || []).map(normalize);
-    const coveredSet = new Set(coveredArr);
-    const coveredLatin = coveredArr.map(translit);
-
-    function prefixMatch(needle, haystack, minMatch) {
-      const max = Math.min(needle.length, haystack.length);
-      let k = 0;
-      while (k < max && needle.charCodeAt(k) === haystack.charCodeAt(k)) k++;
-      return k >= minMatch && k >= needle.length - 2;
-    }
-
-    function tryMatch(elName, enName) {
-      const el = normalize(elName);
-      // 1. exact Greek match
-      if (el && coveredSet.has(el)) return true;
-      // 2. Greek common-prefix (handles genitive endings)
-      if (el.length >= 5) {
-        for (let i = 0; i < coveredArr.length; i++) {
-          const c = coveredArr[i];
-          if (c.length < 5) continue;
-          if (prefixMatch(c, el, 5)) return true;
-        }
-      }
-      // 3. Latin common-prefix on m.en
-      if (enName) {
-        const en = enName.toLowerCase().replace(/[^a-z ]/g, '');
-        if (en.length >= 4) {
-          for (let i = 0; i < coveredLatin.length; i++) {
-            const c = coveredLatin[i];
-            if (c.length < 4) continue;
-            if (prefixMatch(c, en, 4)) return true;
-          }
-        }
-      }
-      return false;
+    // Municipalities (326): mark by GEOGRAPHIC BOUNDING BOX (Attica window).
+    // Name matching kept failing on the genitive forms; this is reliable —
+    // every Attica muni's first path point falls in this SVG-coord window.
+    // Projection: x = (lng - 19.3) * 0.785 * 139.93 ; y = (41.8 - lat) * 139.93
+    // Window: roughly lng 22.85–24.30, lat 37.40–38.45 → x 386–569 , y 462–615
+    const ATTICA_BBOX = { xMin: 386, xMax: 569, yMin: 462, yMax: 615 };
+    function isInAttica(feat) {
+      if (!feat || !feat.d) return false;
+      const m = feat.d.match(/^M\s*([-\d.]+)[,\s]+([-\d.]+)/);
+      if (!m) return false;
+      const x = parseFloat(m[1]);
+      const y = parseFloat(m[2]);
+      return x >= ATTICA_BBOX.xMin && x <= ATTICA_BBOX.xMax
+          && y >= ATTICA_BBOX.yMin && y <= ATTICA_BBOX.yMax;
     }
     const munisData = {};
     (window.GREECE_MUNICIPALITIES || []).forEach((m) => {
-      if (tryMatch(m.el, m.en)) munisData[m.id] = 1.0;
+      if (isInAttica(m)) munisData[m.id] = 1.0;
     });
 
     // Neighborhoods (Athens-central Voronoi cells, 20): all are within central Athens which is covered

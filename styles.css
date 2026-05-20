@@ -1831,26 +1831,65 @@ a.contact-row:hover { color: var(--primary); }
 
 @media (max-width: 640px) {
   body { padding-bottom: 76px; }
+
+  /* Topbar: hide the muted hours pill on tiny screens, keep phone + mail */
   .topbar { font-size: 0.78rem; }
-  .topbar-inner { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; }
-  .brand img { width: 40px; height: 40px; }
-  .brand-text strong { font-size: 0.98rem; }
-  .brand-text em { font-size: 0.68rem; }
+  .topbar-inner { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; padding: 0.4rem 0; }
+  .topbar-link { padding: 0 0.7rem; }
+  .topbar-link-muted { display: none; }
+
+  /* Header */
+  .brand img { height: 48px; max-width: 180px; }
   .nav { min-height: 64px; }
 
+  /* Hero */
+  .hero-inner { padding-top: clamp(6.5rem, 14vh, 8.5rem); }
+  .hero h1 { font-size: clamp(2.2rem, 9vw, 3rem); }
   .hero-actions .btn { width: 100%; }
   .hero-boxes { width: 80vw; right: -16vw; bottom: 4vh; height: 280px; }
   .box-4, .box-5 { display: none; }
+  .hero-form { padding: 1.1rem 1rem; }
+  .hero-form .field-pair { grid-template-columns: 1fr; }
 
+  /* Stats */
   .stats-strip-inner { grid-template-columns: 1fr; gap: 1.4rem; }
   .stat::before { display: none !important; }
+
+  /* Services */
+  .service-icons { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .service-icons a { padding: 1.1rem 0.8rem; }
+  .service-icons svg { width: 36px; height: 36px; }
+  .service-icons span { font-size: 0.86rem; }
   .mosaic { grid-template-columns: 1fr; grid-auto-rows: 220px; }
   .tile-large, .tile-wide, .tile-tall { grid-column: span 1; grid-row: span 1; }
-  .steps { grid-template-columns: 1fr; }
+  .tile { padding: 1.2rem 1.1rem; }
+  .tile-label { font-size: 1.35rem; }
+  .tile-desc { font-size: 0.88rem; }
+  .tile-arrow { width: 36px; height: 36px; top: 0.7rem; right: 0.7rem; }
 
+  /* Process timeline (vertical layout) */
+  .timeline-marker { width: 60px; height: 60px; font-size: 1.05rem; }
+  .timeline-content h3 { font-size: 1.05rem; }
+  .timeline-content p { font-size: 0.9rem; }
+
+  /* Areas: collapse to single column */
+  .area-regions { grid-template-columns: 1fr; }
+
+  /* FAQ */
+  .faq-item { padding: 0.85rem 1rem; }
+  .faq-item summary { font-size: 0.96rem; }
+
+  /* Contact */
   .contact-row { grid-template-columns: 1fr; gap: 0.1rem; }
   .contact-row strong { font-size: 0.72rem; }
+  .contact-actions { flex-direction: column; align-items: stretch; }
+  .contact-actions .btn { width: 100%; }
 
+  /* Footer */
+  .footer { padding: 2.4rem 0 1rem; }
+  .footer-logo { height: 48px; }
+
+  /* Mobile sticky call */
   .mobile-call {
     position: fixed;
     z-index: 55;
@@ -1860,6 +1899,7 @@ a.contact-row:hover { color: var(--primary); }
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.4rem;
     min-height: 54px;
     color: #fff;
     background: var(--primary);
@@ -1871,6 +1911,27 @@ a.contact-row:hover { color: var(--primary); }
 
   .font-picker { bottom: 90px; right: 0.75rem; }
   .font-picker-toggle { width: 48px; height: 48px; font-size: 1rem; }
+}
+
+/* Tiny phones (≤400px): squeeze further */
+@media (max-width: 400px) {
+  .topbar-link span { font-size: 0.78rem; }
+  .brand img { height: 42px; max-width: 150px; }
+  .hero h1 { font-size: clamp(1.95rem, 10vw, 2.5rem); }
+  .hero-lead { font-size: 0.95rem; }
+  .service-icons { grid-template-columns: 1fr; }
+  .area-search input { padding: 0 2.8rem; min-height: 52px; }
+  .area-search-icon { left: 0.95rem; }
+  .area-search-clear { right: 0.65rem; width: 32px; height: 32px; }
+  .stat-num { font-size: 1.8rem; }
+}
+
+/* Tablet portrait + small landscape (641–920px): fill the gap */
+@media (min-width: 641px) and (max-width: 920px) {
+  .hero-form .field-pair { grid-template-columns: 1fr 1fr; }
+  .service-icons { grid-template-columns: repeat(2, 1fr); }
+  .mosaic { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 240px; }
+  .stats-strip-inner { grid-template-columns: 1fr 1fr; gap: 1.6rem; }
 }
 
 /* ── Reduced motion ──────────────────────────────────────── */
