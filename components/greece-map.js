@@ -226,17 +226,21 @@
         p.setAttribute('d', f.d);
         p.dataset.id = f.id;
         var v = state.data[f.id];
+        var hasData = v != null && isFinite(v);
+        p.classList.add(hasData ? 'gmap-covered' : 'gmap-empty');
         var color = colorFor(v, lo, hi);
         if (color) p.setAttribute('fill', color);
 
-        p.addEventListener('mouseenter', function (e) { showTip(f, v, e); });
-        p.addEventListener('mousemove',  function (e) { moveTip(e); });
-        p.addEventListener('mouseleave', function ()  { hideTip(); });
-        p.addEventListener('click', function (e) {
-          gPaths.querySelectorAll('.gmap-active').forEach(function (n) { n.classList.remove('gmap-active'); });
-          p.classList.add('gmap-active');
-          if (typeof o.onClick === 'function') o.onClick(f, e);
-        });
+        if (hasData) {
+          p.addEventListener('mouseenter', function (e) { showTip(f, v, e); });
+          p.addEventListener('mousemove',  function (e) { moveTip(e); });
+          p.addEventListener('mouseleave', function ()  { hideTip(); });
+          p.addEventListener('click', function (e) {
+            gPaths.querySelectorAll('.gmap-active').forEach(function (n) { n.classList.remove('gmap-active'); });
+            p.classList.add('gmap-active');
+            if (typeof o.onClick === 'function') o.onClick(f, e);
+          });
+        }
 
         gPaths.appendChild(p);
         state.pathEls[f.id] = p;

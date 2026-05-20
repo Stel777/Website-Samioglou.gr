@@ -113,6 +113,52 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  /* ── Business hours pill (Athens time, Mon-Fri 09:00-18:00) ── */
+  function initBusinessStatus() {
+    const status = $('[data-business-status]');
+    if (!status) return;
+
+    const formatter = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Athens',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+
+    const update = () => {
+      const parts = formatter.formatToParts(new Date());
+      const weekday = parts.find((p) => p.type === 'weekday')?.value;
+      const hour = Number(parts.find((p) => p.type === 'hour')?.value || 0);
+      const minute = Number(parts.find((p) => p.type === 'minute')?.value || 0);
+      const minutes = (hour % 24) * 60 + minute;
+      const isWeekday = !['Sat', 'Sun'].includes(weekday);
+      const isOpen = isWeekday && minutes >= 9 * 60 && minutes < 18 * 60;
+
+      status.dataset.state = isOpen ? 'open' : 'closed';
+      status.textContent = isOpen ? 'Ανοιχτά τώρα' : 'Κλειστά τώρα';
+      status.setAttribute(
+        'aria-label',
+        `${status.textContent}. Ωράριο Δευτέρα έως Παρασκευή, 09:00 έως 18:00, ώρα Αθήνας.`
+      );
+      status.title = 'Ωράριο: Δευτέρα έως Παρασκευή, 09:00-18:00 (ώρα Αθήνας)';
+    };
+
+    update();
+    window.setInterval(update, 60 * 1000);
+  }
+
+  /* ── Hero anchors: fixed-header offsets are for sections, not the hero ── */
+  function initHeroAnchors() {
+    $$('a[href="#top"], a[href="#quote"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        history.replaceState(null, '', `${location.pathname}${location.search}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  }
+
   /* ── Headline word split (used by hero entrance) ─────────── */
   function splitHeadline() {
     const el = document.getElementById('hero-headline');
@@ -145,18 +191,20 @@
     mm.add('(prefers-reduced-motion: no-preference)', () => {
 
       /* Initial states (avoid CSS/JS transform conflicts) */
-      gsap.set('.hero .eyebrow, .hero-lead, .hero-actions', { y: 24, autoAlpha: 0 });
+      gsap.set('.hero .eyebrow, .hero-status, .hero-lead, .hero-actions', { y: 24, autoAlpha: 0 });
       gsap.set('.hero h1 .word', { yPercent: 110, autoAlpha: 0 });
       gsap.set('.box', {
-        xPercent: 180,
-        rotation: (i) => [-8, 12, -4, 16, -10][i] || 0,
+        x: (i) => [220, 150, 180, 110, 140][i] || 160,
+        y: (i) => [-520, -610, -470, -560, -640][i] || -540,
+        rotation: (i) => [-24, 18, -16, 28, -20][i] || 0,
         autoAlpha: 0,
+        transformOrigin: '50% 100%',
       });
       gsap.set('.scroll-cue', { autoAlpha: 0, y: 10 });
 
       /* Hero entrance */
       gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .to('.hero .eyebrow', { autoAlpha: 1, y: 0, duration: 0.6 }, 0.3)
+        .to('.hero .eyebrow, .hero-status', { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.08 }, 0.3)
         .to('.hero h1 .word', {
           yPercent: 0, autoAlpha: 1,
           duration: 0.95, stagger: 0.07, ease: 'power4.out',
@@ -164,12 +212,13 @@
         .to('.hero-lead', { autoAlpha: 1, y: 0, duration: 0.7 }, 1.0)
         .to('.hero-actions', { autoAlpha: 1, y: 0, duration: 0.6 }, 1.25)
         .to('.box', {
-          xPercent: 0,
+          x: 0,
+          y: 0,
           rotation: (i) => [-6, 8, -3, 10, -5][i] || 0,
           autoAlpha: 1,
-          duration: 1.2,
-          stagger: { each: 0.12, from: 'random' },
-          ease: 'back.out(1.3)',
+          duration: 1.25,
+          stagger: { each: 0.1, from: 'end' },
+          ease: 'bounce.out',
         }, 1.0)
         .to('.scroll-cue', { autoAlpha: 1, y: 0, duration: 0.6 }, 1.8);
 
@@ -282,15 +331,18 @@
 
       /* Magnetic primary CTAs (skip the small nav CTA — it jitters in the sticky header) */
       $$('.btn-primary:not(.nav-cta)').forEach((btn) => {
-        const strength = 0.28;
+        const strength = 0.08;
+        const maxShift = 5;
         btn.addEventListener('mousemove', (e) => {
           const r = btn.getBoundingClientRect();
-          const x = (e.clientX - r.left - r.width / 2) * strength;
-          const y = (e.clientY - r.top - r.height / 2) * strength;
-          gsap.to(btn, { x, y, duration: 0.4, ease: 'power3.out' });
+          const rawX = (e.clientX - r.left - r.width / 2) * strength;
+          const rawY = (e.clientY - r.top - r.height / 2) * strength;
+          const x = Math.max(-maxShift, Math.min(maxShift, rawX));
+          const y = Math.max(-maxShift, Math.min(maxShift, rawY));
+          gsap.to(btn, { x, y, duration: 0.24, ease: 'power2.out', overwrite: 'auto' });
         });
         btn.addEventListener('mouseleave', () => {
-          gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+          gsap.to(btn, { x: 0, y: 0, duration: 0.28, ease: 'power2.out', overwrite: 'auto' });
         });
       });
 
@@ -324,7 +376,7 @@
 
     /* ── Reduced motion: skip everything cinematic ─────── */
     mm.add('(prefers-reduced-motion: reduce)', () => {
-      gsap.set('.hero .eyebrow, .hero-lead, .hero-actions, .scroll-cue', { autoAlpha: 1, y: 0 });
+      gsap.set('.hero .eyebrow, .hero-status, .hero-lead, .hero-actions, .scroll-cue', { autoAlpha: 1, y: 0 });
       gsap.set('.hero h1 .word', { yPercent: 0, autoAlpha: 1 });
       gsap.set('.box', { xPercent: 0, autoAlpha: 1 });
       gsap.set('.reveal', { opacity: 1, y: 0 });
@@ -429,7 +481,7 @@
 
         const details = document.createElement('details');
         details.className = 'area-region';
-        if (nq !== '' || region.label === 'Κέντρο Αθήνας') details.open = true;
+        if (nq !== '') details.open = true;
 
         const summary = document.createElement('summary');
         summary.innerHTML =
@@ -653,7 +705,7 @@
       modes: ['municipalities'],   // lock to one layer — hides the toggle
       data: munisData,             // pass only muni data; cleaner
       scale: 'coverage',
-      title: 'Πού εξυπηρετούμε στην Αττική',
+      title: '',
       valueLabel: 'κάλυψη',
       valueFormat: (v) => (v >= 0.85 ? 'Καλύπτεται' : '—'),
       showToggle: false,
@@ -665,12 +717,54 @@
 
     if (!map) return;
 
-    /* Medium zoom — Athens centered, with Peloponnese SW and Euboea NE visible
-       as context. Full Greece is too zoomed-out, tight Attica was too cropped. */
-    const MEDIUM_VIEWBOX = '300 390 360 280';
+    /* Start wide, then camera-zoom into the covered Attica area. */
+    const START_VIEWBOX = '290 340 430 370';
+    const COVERAGE_VIEWBOX = '335 425 310 245';
+    const parseViewBox = (value) => value.split(/\s+/).map(Number);
+    const startBox = parseViewBox(START_VIEWBOX);
+    const targetBox = parseViewBox(COVERAGE_VIEWBOX);
+
     requestAnimationFrame(() => {
       const svg = host.querySelector('svg');
-      if (svg) svg.setAttribute('viewBox', MEDIUM_VIEWBOX);
+      if (!svg) return;
+
+      svg.setAttribute('viewBox', START_VIEWBOX);
+      const coveredPaths = Array.from(host.querySelectorAll('path.gmap-covered'));
+      if (!coveredPaths.length) return;
+
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        svg.setAttribute('viewBox', COVERAGE_VIEWBOX);
+        coveredPaths.forEach((path) => { path.setAttribute('fill-opacity', '1'); });
+        return;
+      }
+
+      gsap.set(coveredPaths, { fillOpacity: 0 });
+      ScrollTrigger.create({
+        trigger: host,
+        start: 'top 68%',
+        once: true,
+        onEnter: () => {
+          const camera = { t: 0 };
+          gsap.timeline()
+            .to(camera, {
+              t: 1,
+              duration: 2.15,
+              ease: 'power3.inOut',
+              onUpdate: () => {
+                const current = startBox.map((start, index) =>
+                  start + (targetBox[index] - start) * camera.t
+                );
+                svg.setAttribute('viewBox', current.join(' '));
+              },
+            })
+            .to(coveredPaths, {
+              fillOpacity: 1,
+              duration: 1.05,
+              ease: 'power2.out',
+              stagger: { each: 0.028, from: 'random' },
+            }, '-=0.55');
+        },
+      });
     });
   }
 
@@ -678,6 +772,8 @@
   function boot() {
     initMobileNav();
     initHeaderScroll();
+    initBusinessStatus();
+    initHeroAnchors();
     initHeroVideoSequence();
     initAreas();
     initFontPicker();
