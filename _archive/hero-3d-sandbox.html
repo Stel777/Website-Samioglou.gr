@@ -1,0 +1,452 @@
+<!doctype html>
+<!--
+  ============================================================
+  Samioglou — Hero animation sandbox
+  ============================================================
+  Standalone prototype for the new hero. Single file, zero build,
+  GSAP loaded from CDN. Once the motion feels right, this gets
+  ported into claude-design/.
+
+  Placeholders to swap later:
+    - <source src="assets/samioglou-truck.mp4">   ← Veo 3 video
+    - <video poster="assets/moving-hero.jpg">     ← still poster
+    - The 5 .box <span>s are CSS-drawn cardboard placeholders;
+      swap them for real transparent-PNG boxes when you have them.
+  ============================================================
+-->
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0F1C2E">
+  <title>Hero Sandbox · Σαμιόγλου</title>
+  <meta name="description" content="Hero animation sandbox for the Samioglou redesign.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+  <style>
+    :root {
+      --ink: #0F1C2E;
+      --paper: #FFFFFF;
+      --primary: #D6402F;
+      --primary-hover: #B5301F;
+      --accent: #0E4F86;
+      --gold: #E9B23B;
+      --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+      --font-ui: "Manrope", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font-ui);
+      color: var(--ink);
+      background: #000;
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      color: var(--paper);
+      isolation: isolate;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      overflow: hidden;
+    }
+    .hero-video video,
+    .hero-video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.04); /* slight breath so the scroll-zoom feels deliberate */
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: 0.92;
+      background:
+        linear-gradient(96deg, rgba(15,28,46,0.82) 0%, rgba(15,28,46,0.52) 44%, rgba(15,28,46,0.18) 100%),
+        linear-gradient(0deg, rgba(15,28,46,0.62), transparent 48%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1240px, calc(100% - 2rem));
+      margin: 0 auto;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      align-content: center;
+      padding: clamp(5rem, 12vh, 9rem) 0 clamp(3rem, 8vh, 6rem);
+    }
+
+    .hero-copy { max-width: 760px; }
+
+    .eyebrow {
+      display: inline-block;
+      margin: 0 0 1.2rem;
+      padding: 0.5rem 0.9rem;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0; /* GSAP fades in */
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6.4vw, 5.4rem);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.022em;
+      text-wrap: balance;
+    }
+    .word-wrap {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: 0.06em; /* keep descenders inside the mask */
+    }
+    .hero h1 .word {
+      display: inline-block;
+      opacity: 0; /* GSAP slides + fades in */
+    }
+
+    .hero-lead {
+      max-width: 56ch;
+      margin: 1.5rem 0 0;
+      font-size: clamp(1rem, 1.5vw, 1.22rem);
+      color: rgba(255,255,255,0.88);
+      opacity: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 2rem;
+      opacity: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0.8rem 1.3rem;
+      border: 0;
+      border-radius: 10px;
+      font-family: var(--font-ui);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+    }
+    .btn-primary {
+      color: var(--paper);
+      background: var(--primary);
+      box-shadow: 0 16px 34px rgba(214,64,47,0.42);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 44px rgba(214,64,47,0.5);
+    }
+    .btn-ghost {
+      color: var(--paper);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.34);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.16);
+      transform: translateY(-2px);
+    }
+
+    /* ── Box props (flying cargo) ─────────────────────────── */
+    .hero-boxes {
+      position: absolute;
+      right: -2rem;
+      bottom: 10vh;
+      width: min(40vw, 520px);
+      height: 340px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .box {
+      position: absolute;
+      background:
+        linear-gradient(155deg, #c79560 0%, #a07442 60%, #7d5530 100%);
+      border: 1px solid rgba(0,0,0,0.2);
+      border-radius: 4px;
+      box-shadow:
+        0 16px 32px rgba(0,0,0,0.32),
+        inset 0 1px 0 rgba(255,255,255,0.22),
+        inset 0 -10px 0 rgba(0,0,0,0.10);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .box::before {
+      content: "";
+      position: absolute;
+      inset: 14% 18%;
+      border: 1.5px dashed rgba(40,24,8,0.42);
+      border-radius: 2px;
+    }
+    .box::after {
+      content: "";
+      position: absolute;
+      left: -4%; right: -4%; top: 50%;
+      height: 7px;
+      background: rgba(60,40,18,0.55);
+      transform: translateY(-50%);
+    }
+    .box-1 { width: 140px; height: 118px; right: 4%;  bottom: 6%;  }
+    .box-2 { width: 104px; height: 92px;  right: 26%; bottom: 22%; }
+    .box-3 { width: 88px;  height: 78px;  right: 46%; bottom: 4%;  }
+    .box-4 { width: 72px;  height: 70px;  right: 14%; bottom: 38%; }
+    .box-5 { width: 60px;  height: 60px;  right: 36%; bottom: 32%; }
+
+    /* ── Scroll cue ───────────────────────────────────────── */
+    .scroll-cue {
+      position: absolute;
+      left: 50%;
+      bottom: 2.2rem;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.74rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0;
+    }
+    .scroll-cue::after {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 38px;
+      margin: 0.55rem auto 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), transparent);
+      animation: cueDrop 1.8s ease-out infinite;
+    }
+    @keyframes cueDrop {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 0.9; }
+      60%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ── Placeholder next section ─────────────────────────── */
+    .next-section {
+      min-height: 100vh;
+      padding: 6rem 2rem;
+      background: linear-gradient(180deg, #ffffff 0%, #f5f7fa 100%);
+      display: grid;
+      place-items: center;
+    }
+    .next-section-inner {
+      max-width: 760px;
+      text-align: center;
+    }
+    .next-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      letter-spacing: -0.018em;
+      line-height: 1.06;
+      margin: 0 0 1rem;
+      color: var(--ink);
+    }
+    .next-section p {
+      color: #5B6B7E;
+      font-size: 1.1rem;
+    }
+
+    /* ── Mobile ───────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: clamp(2.4rem, 9vw, 3.4rem); }
+      .hero-boxes {
+        width: 80vw;
+        right: -16vw;
+        bottom: 4vh;
+        height: 280px;
+      }
+      .box-4, .box-5 { display: none; }
+    }
+
+    /* ── Reduced motion: show everything immediately ──────── */
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-cue::after { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero" id="hero">
+    <!-- ===== VIDEO BACKGROUND =====
+         Replace the commented <source> with your Veo 3 mp4 once available.
+         The poster image renders until the video loads / if no <source> is set. -->
+    <div class="hero-video">
+      <video autoplay muted loop playsinline preload="auto"
+             poster="assets/moving-hero.jpg"
+             aria-hidden="true">
+        <!-- TODO: <source src="assets/samioglou-truck.mp4" type="video/mp4"> -->
+      </video>
+    </div>
+
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    <!-- ===== CARGO BOXES (placeholders) ===== -->
+    <div class="hero-boxes" aria-hidden="true">
+      <span class="box box-1"></span>
+      <span class="box box-2"></span>
+      <span class="box box-3"></span>
+      <span class="box box-4"></span>
+      <span class="box box-5"></span>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Μεταφορική εταιρεία στην Αθήνα</p>
+        <h1 id="hero-headline">Μεταφορές και μετακομίσεις χωρίς άγχος.</h1>
+        <p class="hero-lead">
+          Η ομάδα Σαμιόγλου οργανώνει κάθε μεταφορά με προσοχή, αξιοπιστία, ταχύτητα
+          και σεβασμό σε ό,τι είναι πολύτιμο για εσάς.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#quote">Λάβετε δωρεάν προσφορά</a>
+          <a class="btn btn-ghost" href="tel:+302108611507">210 861 1507</a>
+        </div>
+      </div>
+    </div>
+
+    <span class="scroll-cue" aria-hidden="true">Scroll</span>
+  </section>
+
+  <section class="next-section">
+    <div class="next-section-inner">
+      <h2>Επόμενη ενότητα — placeholder.</h2>
+      <p>Placeholder section so the scroll-pinned hero has somewhere to release into. Real sections follow once hero polish is locked.</p>
+    </div>
+  </section>
+
+  <!-- GSAP from CDN (matches frontendmaxxing/gsap.skill.md convention) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* Split the headline into per-word spans, each in a clipping wrapper.
+       Vanilla split keeps us free of SplitText for now. */
+    (function splitHeadline() {
+      const el = document.getElementById('hero-headline');
+      if (!el) return;
+      const words = el.textContent.trim().split(/\s+/);
+      el.textContent = '';
+      words.forEach((w, i) => {
+        const wrap = document.createElement('span');
+        wrap.className = 'word-wrap';
+        const word = document.createElement('span');
+        word.className = 'word';
+        word.textContent = w;
+        wrap.appendChild(word);
+        el.appendChild(wrap);
+        if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+      });
+    })();
+
+    const mm = gsap.matchMedia();
+
+    /* ── Full motion path ─────────────────────────────────── */
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+
+      // Establish initial state in JS (avoids fighting CSS transforms).
+      gsap.set('.eyebrow, .hero-lead, .hero-actions', { y: 24, autoAlpha: 0 });
+      gsap.set('.hero h1 .word', { yPercent: 110, autoAlpha: 0 });
+      gsap.set('.box', {
+        xPercent: 180,
+        rotation: (i) => [-8, 12, -4, 16, -10][i] || 0,
+        autoAlpha: 0,
+      });
+      gsap.set('.scroll-cue', { autoAlpha: 0, y: 10 });
+
+      // ── Entrance (plays on load) ─────────────────────────
+      const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      intro
+        .to('.eyebrow', { autoAlpha: 1, y: 0, duration: 0.6 }, 0.3)
+        .to('.hero h1 .word', {
+          yPercent: 0,
+          autoAlpha: 1,
+          duration: 0.95,
+          stagger: 0.07,
+          ease: 'power4.out',
+        }, 0.45)
+        .to('.hero-lead', { autoAlpha: 1, y: 0, duration: 0.7 }, 1.0)
+        .to('.hero-actions', { autoAlpha: 1, y: 0, duration: 0.6 }, 1.25)
+        .to('.box', {
+          xPercent: 0,
+          rotation: (i) => [-6, 8, -3, 10, -5][i] || 0,
+          autoAlpha: 1,
+          duration: 1.2,
+          stagger: { each: 0.12, from: 'random' },
+          ease: 'back.out(1.3)',
+        }, 1.0)
+        .to('.scroll-cue', { autoAlpha: 1, y: 0, duration: 0.6 }, 1.8);
+
+      // ── Scroll-driven exit: pin hero, fade copy + boxes ──
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: '+=80%',
+          scrub: 1,
+          pin: true,
+          pinSpacing: true,
+          // markers: true, // toggle for debugging
+        },
+      })
+        .to('.hero-copy', { y: -80, autoAlpha: 0, ease: 'none' }, 0)
+        .to('.hero-boxes', { y: 60, autoAlpha: 0, ease: 'none' }, 0)
+        .to('.scroll-cue', { autoAlpha: 0, ease: 'none' }, 0)
+        .to('.hero-vignette', { opacity: 1, ease: 'none' }, 0)
+        .to('.hero-video video, .hero-video img', { scale: 1.12, ease: 'none' }, 0);
+    });
+
+    /* ── Reduced motion: show everything, skip the timeline ─ */
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set('.eyebrow, .hero-lead, .hero-actions, .scroll-cue', { autoAlpha: 1, y: 0 });
+      gsap.set('.hero h1 .word', { yPercent: 0, autoAlpha: 1 });
+      gsap.set('.box', { xPercent: 0, autoAlpha: 1 });
+    });
+  </script>
+</body>
+</html>

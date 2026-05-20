@@ -1,265 +1,486 @@
 <!doctype html>
 <html lang="el">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Μεταφορές Μετακομίσεις Αθήνα | Σαμιόγλου Χάρης</title>
-    <meta name="description" content="Μεταφορές, μετακομίσεις, μικρομεταφορές, συσκευασίες και αποθήκευση οικοσκευών στην Αθήνα, την Αττική και όλη την Ελλάδα.">
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Μετάβαση στο περιεχόμενο</a>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0F1C2E">
+  <title>Σαμιόγλου · Μεταφορές Μετακομίσεις Αθήνα</title>
+  <meta name="description" content="Μεταφορές, μετακομίσεις, φορτοταξί, συσκευασίες και αποθήκευση οικοσκευών στην Αθήνα, την Αττική και όλη την Ελλάδα. Σαμιόγλου Χάρης.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/moving-hero.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&display=swap">
+  <link rel="stylesheet" href="typography/greek-fonts.css">
+  <link rel="stylesheet" href="components/greece-map.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-font-preset="ubuntu">
+  <a class="skip-link" href="#main">Μετάβαση στο περιεχόμενο</a>
+
+  <!-- ───── Floating chrome (topbar + header overlay hero) ── -->
+  <div class="site-chrome" data-chrome>
+
+    <div class="topbar">
+      <div class="topbar-inner">
+        <span class="topbar-cta">Καλέστε μας τώρα —</span>
+        <a class="topbar-phone" href="tel:+302108611507">📞 210 861 1507</a>
+        <a href="mailto:info@samioglou.gr">✉ info@samioglou.gr</a>
+        <span class="topbar-hours">🕒 Δευ–Παρ · 9:00–18:00</span>
+      </div>
+    </div>
 
     <header class="site-header" data-header>
-      <div class="topbar">
-        <a href="tel:+302108611507">210 861 1507</a>
-        <a href="mailto:info@samioglou.gr">info@samioglou.gr</a>
-        <span>Δευ - Παρ: 9:00 - 18:00</span>
+    <nav class="nav" aria-label="Κύρια πλοήγηση">
+      <a class="brand" href="#top" aria-label="Σαμιόγλου — αρχική">
+        <img src="assets/samioglou-logo.png" alt="Σαμιόγλου — Μεταφορές Μετακομίσεις" width="244" height="72" decoding="async">
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
+        <span></span><span></span><span></span>
+        <span class="sr-only">Άνοιγμα μενού</span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu" data-nav-menu>
+        <a href="#services">Υπηρεσίες</a>
+        <a href="#areas">Περιοχές</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Επικοινωνία</a>
       </div>
 
-      <nav class="nav" aria-label="Κύρια πλοήγηση">
-        <a class="brand" href="#home" aria-label="Σαμιόγλου αρχική">
-          <img src="assets/samioglou-logo.png" alt="Σαμιόγλου Μεταφορές Μετακομίσεις">
-        </a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span class="sr-only">Άνοιγμα μενού</span>
-        </button>
-        <div class="nav-menu" id="nav-menu" data-nav-menu>
-          <a href="#services">Υπηρεσίες</a>
-          <a href="#process">Διαδικασία</a>
-          <a href="#areas">Περιοχές</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contact">Επικοινωνία</a>
-        </div>
-        <a class="nav-call" href="tel:+302108611507">Καλέστε τώρα</a>
-      </nav>
+      <a class="btn btn-primary nav-cta" href="#quote">Πάρτε προσφορά</a>
+    </nav>
     </header>
 
-    <main id="main">
-      <section class="hero" id="home" aria-labelledby="hero-title">
-        <div class="hero-media" aria-hidden="true"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-inner">
-          <div class="hero-copy">
-            <p class="eyebrow">Μεταφορική εταιρεία στην Αθήνα</p>
-            <h1 id="hero-title">Μεταφορές και μετακομίσεις χωρίς άγχος.</h1>
-            <p class="hero-lead">Η ομάδα Σαμιόγλου οργανώνει κάθε μεταφορά με προσοχή, αξιοπιστία, ταχύτητα και σεβασμό σε ό,τι είναι πολύτιμο για εσάς.</p>
-            <div class="hero-actions" aria-label="Βασικές ενέργειες">
-              <a class="button primary" href="#quote">Λάβετε δωρεάν προσφορά</a>
-              <a class="button ghost" href="tel:+302108611507">210 861 1507</a>
-            </div>
-            <div class="hero-proof" aria-label="Σημεία αξιοπιστίας">
-              <span>Αθήνα & όλη η Ελλάδα</span>
-              <span>Μικρές και μεγάλες μετακομίσεις</span>
-              <span>Σύγχρονος εξοπλισμός</span>
-            </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ───── HERO ──────────────────────────────────────── -->
+    <section class="hero" id="top">
+      <div class="hero-video">
+        <!-- Two-clip cinematic sequence: drives → doors open → loops back. -->
+        <video class="hero-vid hero-vid-1" autoplay muted playsinline preload="auto"
+               poster="assets/moving-hero.jpg" aria-hidden="true">
+          <source src="assets/truck-driving.mp4" type="video/mp4">
+        </video>
+        <video class="hero-vid hero-vid-2" muted playsinline preload="auto" aria-hidden="true">
+          <source src="assets/truck-doors.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-vignette" aria-hidden="true"></div>
+
+      <div class="hero-boxes" aria-hidden="true">
+        <span class="box box-1"></span>
+        <span class="box box-2"></span>
+        <span class="box box-3"></span>
+        <span class="box box-4"></span>
+        <span class="box box-5"></span>
+      </div>
+
+      <div class="hero-inner container">
+        <div class="hero-copy">
+          <p class="eyebrow eyebrow-on-dark">Μεταφορική εταιρεία στην Αθήνα</p>
+          <h1 id="hero-headline">Μεταφορές και μετακομίσεις χωρίς άγχος.</h1>
+          <p class="hero-lead">
+            Η ομάδα Σαμιόγλου οργανώνει κάθε μεταφορά με προσοχή, αξιοπιστία, ταχύτητα
+            και σεβασμό σε ό,τι είναι πολύτιμο για εσάς.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#quote">Λάβετε δωρεάν προσφορά</a>
+            <a class="btn btn-ghost btn-lg" href="tel:+302108611507">210 861 1507</a>
           </div>
-
-          <form class="quote-panel" id="quote" data-quote-form>
-            <p class="panel-kicker">Γρήγορη προσφορά</p>
-            <h2>Πείτε μας τι μεταφέρετε.</h2>
-            <label>
-              Ονοματεπώνυμο
-              <input name="name" autocomplete="name" required>
-            </label>
-            <label>
-              Τηλέφωνο
-              <input name="phone" autocomplete="tel" inputmode="tel" required>
-            </label>
-            <label>
-              Υπηρεσία
-              <select name="service" required>
-                <option value="">Επιλέξτε υπηρεσία</option>
-                <option>Μεταφορά</option>
-                <option>Μετακόμιση</option>
-                <option>Μικρομεταφορά / Φορτοταξί</option>
-                <option>Αποθήκευση</option>
-                <option>Πακετάρισμα</option>
-                <option>Συνολική προσφορά</option>
-              </select>
-            </label>
-            <label>
-              Αφετηρία - προορισμός
-              <input name="route" placeholder="π.χ. Κυψέλη προς Γλυφάδα">
-            </label>
-            <button class="button primary full" type="submit">Αποστολή αιτήματος</button>
-            <p class="form-note" data-form-note>Θα ανοίξει έτοιμο email προς info@samioglou.gr.</p>
-          </form>
-        </div>
-      </section>
-
-      <section class="section intro" aria-labelledby="intro-title">
-        <div class="section-heading">
-          <p class="eyebrow">Η εταιρεία μας</p>
-          <h2 id="intro-title">Ό,τι είναι πολύτιμο για εσάς, για εμάς γίνεται πολυτιμότερο.</h2>
-        </div>
-        <div class="intro-grid">
-          <p>Οι μεταφορές και οι μετακομίσεις χρειάζονται ιδιαίτερη προσοχή, αξιοπιστία, ταχύτητα και σεβασμό απέναντι στους πελάτες και σε ό,τι μεταφέρεται.</p>
-          <p>Σχεδιάζουμε την καλύτερη μεταφορά αποκλειστικά για εσάς, απαντάμε στις ερωτήσεις σας και φροντίζουμε να βρείτε λύση εύκολα, γρήγορα και οικονομικά.</p>
-          <p>Το έμπειρο προσωπικό μας ενημερώνεται και εκπαιδεύεται διαρκώς, ενώ ο στόλος και ο εξοπλισμός μας αναπτύσσονται με στόχο τη μέγιστη εξυπηρέτηση.</p>
-        </div>
-      </section>
-
-      <section class="section services" id="services" aria-labelledby="services-title">
-        <div class="section-heading compact">
-          <p class="eyebrow">Υπηρεσίες</p>
-          <h2 id="services-title">Επιλέξτε τον τύπο μεταφοράς που χρειάζεστε.</h2>
         </div>
 
-        <div class="service-mosaic">
-          <a class="service-tile tile-large" href="#quote" style="--tile-image: url('assets/moving-hero.jpg')">
-            <span>Μεταφορές<br>Μετακομίσεις</span>
+        <form class="hero-form" id="quote" data-quote-form aria-label="Φόρμα γρήγορης προσφοράς">
+          <p class="kicker">Γρήγορη προσφορά</p>
+          <h3>Πείτε μας τι μεταφέρετε.</h3>
+
+          <label class="field">
+            <span>Ονοματεπώνυμο</span>
+            <input name="name" autocomplete="name" required placeholder="π.χ. Μαρία Παπαδοπούλου">
+          </label>
+          <label class="field">
+            <span>Τηλέφωνο</span>
+            <input name="phone" autocomplete="tel" inputmode="tel" required placeholder="210 …">
+          </label>
+          <label class="field">
+            <span>Υπηρεσία</span>
+            <select name="service" required>
+              <option value="">Επιλέξτε υπηρεσία</option>
+              <option>Μετακόμιση</option>
+              <option>Μεταφορά</option>
+              <option>Φορτοταξί / Μικρομεταφορά</option>
+              <option>Συσκευασία</option>
+              <option>Αποθήκευση</option>
+              <option>Ειδική μεταφορά</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Αφετηρία → προορισμός</span>
+            <input name="route" placeholder="π.χ. Κυψέλη → Γλυφάδα">
+          </label>
+
+          <button class="btn btn-primary btn-block" type="submit">Στείλτε το αίτημα</button>
+          <p class="form-note" data-form-note>Θα ανοίξει έτοιμο email προς info@samioglou.gr.</p>
+        </form>
+      </div>
+
+      <span class="scroll-cue" aria-hidden="true">Scroll</span>
+    </section>
+
+    <!-- ───── Stats strip (4 numbers that count) ───────── -->
+    <section class="stats-strip" aria-label="Αριθμοί που μετράμε">
+      <div class="container stats-strip-inner">
+        <div class="stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 3h5v5"/>
+            <path d="M21 3l-7.5 7.5"/>
+            <path d="M21 14v5a2 2 0 0 1-2 2h-5"/>
+            <path d="M3 14v5a2 2 0 0 0 2 2h5"/>
+            <path d="M3 10V5a2 2 0 0 1 2-2h5"/>
+            <path d="M8 12l3 3 5-5"/>
+          </svg>
+          <strong class="stat-num" data-count="32000">0</strong>
+          <span>Ολοκληρωμένες μεταφορές</span>
+        </div>
+        <div class="stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <strong class="stat-num" data-count="2017">0</strong>
+          <span>Πελάτες σε όλη την Ελλάδα</span>
+        </div>
+        <div class="stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+            <path d="M15 18H9"/>
+            <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+            <circle cx="17" cy="18" r="2"/>
+            <circle cx="7" cy="18" r="2"/>
+          </svg>
+          <strong class="stat-num" data-count="12">0</strong>
+          <span>Οχήματα στόλου</span>
+        </div>
+        <div class="stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 21a8 8 0 0 0-16 0"/>
+            <circle cx="10" cy="8" r="5"/>
+            <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>
+          </svg>
+          <strong class="stat-num" data-count="18">0</strong>
+          <span>Άτομα στην ομάδα μας</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── Services mosaic ───────────────────────────── -->
+    <section class="section services reveal" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section-heading section-heading-split">
+          <div>
+            <p class="eyebrow">Υπηρεσίες</p>
+            <h2 id="services-title" class="display-h2">Επιλέξτε τον τύπο μεταφοράς που χρειάζεστε.</h2>
+          </div>
+          <p class="section-heading-aside">
+            Από μια απλή μικρομεταφορά μέχρι μετακόμιση ολόκληρης οικίας ή γραφείου,
+            έχουμε την εμπειρία, τον στόλο και τις ειδικές συσκευασίες για να τη φέρουμε εις πέρας.
+          </p>
+        </header>
+
+        <ul class="service-icons" aria-label="Σύνοψη υπηρεσιών">
+          <li>
+            <a href="#quote">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                <path d="M15 18H9"/>
+                <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                <circle cx="17" cy="18" r="2"/>
+                <circle cx="7" cy="18" r="2"/>
+              </svg>
+              <span>Μεταφορές<br>Μετακομίσεις</span>
+            </a>
+          </li>
+          <li>
+            <a href="#quote">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 18V8a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10"/>
+                <path d="M14 9h3.5a1 1 0 0 1 .78.376l2.5 3.125A1 1 0 0 1 21 13.125V17a1 1 0 0 1-1 1h-1"/>
+                <path d="M9 18H5"/>
+                <circle cx="7" cy="18" r="2"/>
+                <circle cx="17" cy="18" r="2"/>
+              </svg>
+              <span>Φορτοταξί<br>Μικρομεταφορές</span>
+            </a>
+          </li>
+          <li>
+            <a href="#quote">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/>
+                <path d="M6 18h12"/>
+                <path d="M6 14h12"/>
+                <path d="M6 10h12"/>
+              </svg>
+              <span>Αποθήκευση<br>Οικοσκευών</span>
+            </a>
+          </li>
+          <li>
+            <a href="#quote">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Συμβουλές<br>Μετακόμισης</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="mosaic">
+          <a class="tile tile-large" href="#quote" style="--tile-image: url('assets/truck-sunset.jpg')">
+            <span class="tile-shade"></span>
+            <span class="tile-body">
+              <span class="tile-label">Μεταφορές<br>Μετακομίσεις</span>
+              <span class="tile-desc">Μικρές και μεγάλες μετακομίσεις στην Αθήνα και όλη την Ελλάδα.</span>
+              <span class="tile-cta">Πάρτε προσφορά →</span>
+            </span>
           </a>
-          <a class="service-tile tile-tall" href="#quote" style="--tile-image: url('assets/fortotaxi.jpg')">
-            <span>Φορτοταξί<br>Μικρομεταφορές</span>
+          <a class="tile tile-tall" href="#quote" style="--tile-image: url('assets/fortotaxi.jpg')">
+            <span class="tile-shade"></span>
+            <span class="tile-body">
+              <span class="tile-label">Φορτοταξί<br>Μικρομεταφορές</span>
+              <span class="tile-desc">Για λίγα αντικείμενα — γρήγορα, οικονομικά, με ασφάλεια.</span>
+              <span class="tile-cta">Πάρτε προσφορά →</span>
+            </span>
           </a>
-          <a class="service-tile" href="#quote" style="--tile-image: url('assets/moving-tips.jpg')">
-            <span>Συμβουλές<br>Μετακόμισης</span>
+          <a class="tile tile-tall" href="#quote" style="--tile-image: url('assets/packing.jpg')">
+            <span class="tile-shade"></span>
+            <span class="tile-body">
+              <span class="tile-label">Συσκευασία<br>αντικειμένων</span>
+              <span class="tile-desc">Απλές και εξειδικευμένες συσκευασίες, με προτεραιότητα την προστασία.</span>
+              <span class="tile-cta">Πάρτε προσφορά →</span>
+            </span>
           </a>
-          <a class="service-tile" href="#quote" style="--tile-image: url('assets/packing.jpg')">
-            <span>Συσκευασία<br>Αντικειμένων</span>
+          <a class="tile tile-wide" href="#quote" style="--tile-image: url('assets/team.jpg')">
+            <span class="tile-shade"></span>
+            <span class="tile-body">
+              <span class="tile-label">Αποθήκευση<br>οικοσκευών</span>
+              <span class="tile-desc">Ασφαλείς χώροι αποθήκευσης για όσο χρειαστεί.</span>
+              <span class="tile-cta">Πάρτε προσφορά →</span>
+            </span>
           </a>
-          <a class="service-tile tile-wide" href="#quote" style="--tile-image: url('assets/team.jpg')">
-            <span>Αποθήκευση<br>Οικοσκευών</span>
+          <a class="tile" href="#quote" style="--tile-image: url('assets/art-of-moving.jpg')">
+            <span class="tile-shade"></span>
+            <span class="tile-body">
+              <span class="tile-label">Ειδικές<br>μεταφορές</span>
+              <span class="tile-desc">Μουσικά όργανα, ιατρικά μηχανήματα, έργα τέχνης, αντικείμενα αξίας.</span>
+              <span class="tile-cta">Πάρτε προσφορά →</span>
+            </span>
           </a>
-          <a class="service-tile" href="#quote" style="--tile-image: url('assets/moving-hero.jpg')">
-            <span>Ειδικές<br>Μεταφορές</span>
+          <a class="tile" href="#quote" style="--tile-image: url('assets/moving-couple.jpg')">
+            <span class="tile-shade"></span>
+            <span class="tile-body">
+              <span class="tile-label">Συμβουλές<br>μετακόμισης</span>
+              <span class="tile-desc">Σας ακούμε, σας προτείνουμε λύσεις, σας απαλλάσσουμε από το άγχος.</span>
+              <span class="tile-cta">Πάρτε προσφορά →</span>
+            </span>
           </a>
         </div>
+      </div>
+    </section>
 
-        <div class="service-detail-grid">
-          <article>
-            <h3>Μεταφορές στην Αθήνα και σε όλη την Ελλάδα</h3>
-            <p>Αναλαμβάνουμε μικρές και μεγάλες μετακομίσεις, με οργάνωση από την πρώτη επικοινωνία μέχρι την παράδοση στον τελικό προορισμό.</p>
-          </article>
-          <article>
-            <h3>Φορτοταξί για λίγα αντικείμενα</h3>
-            <p>Κούτες, καναπέδες, κρεβάτια, γραφεία, ψυγεία, πλυντήρια, ηλεκτρικές συσκευές, υπολογιστές, πίνακες και ό,τι άλλο χρειάζεται άμεση μεταφορά.</p>
-          </article>
-          <article>
-            <h3>Συσκευασία και προστασία</h3>
-            <p>Μπορούμε να αναλάβουμε απλές ή εξειδικευμένες συσκευασίες, με προτεραιότητα την ασφάλεια των αντικειμένων και την αποφυγή φθορών.</p>
-          </article>
-          <article>
-            <h3>Ειδική φροντίδα</h3>
-            <p>Διαχειριζόμαστε αντικείμενα που απαιτούν προσοχή, όπως μουσικά όργανα, ιατρικά μηχανήματα, ηλεκτρονικούς υπολογιστές, έργα τέχνης και αντικείμενα μεγάλης αξίας.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section process" id="process" aria-labelledby="process-title">
-        <div class="section-heading">
+    <!-- ───── Process (slim 3-step strip) ───────────────── -->
+    <section class="section process reveal" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <header class="section-heading">
           <p class="eyebrow">Πώς δουλεύουμε</p>
-          <h2 id="process-title">Καθαρή διαδικασία, γρήγορη εκτίμηση, ασφαλής μεταφορά.</h2>
-        </div>
-        <div class="steps">
-          <article>
-            <span>01</span>
-            <h3>Ακούμε τις ανάγκες σας</h3>
-            <p>Συζητάμε τι θέλετε να μεταφέρετε, τον αριθμό και το είδος των αντικειμένων, την αφετηρία και τον προορισμό.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Εκτιμούμε σωστά</h3>
-            <p>Ελέγχουμε τα δεδομένα της μεταφοράς και σας δίνουμε την πιο συμφέρουσα οικονομική προσφορά για την περίπτωσή σας.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Αναλαμβάνουμε τα πάντα</h3>
-            <p>Με διαφορετικά μεγέθη φορτηγών, ανυψωτικά μηχανήματα και έμπειρο προσωπικό, οργανώνουμε τη μετακόμιση ολοκληρωμένα.</p>
-          </article>
-        </div>
-      </section>
+          <h2 id="process-title" class="display-h2">Καθαρή διαδικασία. Γρήγορη εκτίμηση. Ασφαλής μεταφορά.</h2>
+        </header>
 
-      <section class="section why" aria-labelledby="why-title">
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num">01</span>
+            <h3>Επικοινωνία</h3>
+            <p>Μας λέτε τι, από πού και προς πού.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">02</span>
+            <h3>Εκτίμηση</h3>
+            <p>Σας δίνουμε γρήγορα την πιο συμφέρουσα προσφορά.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">03</span>
+            <h3>Μεταφορά & παράδοση</h3>
+            <p>Έμπειρο προσωπικό, σύγχρονος στόλος, ασφαλής παράδοση.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ───── Why us ────────────────────────────────────── -->
+    <section class="section why reveal" aria-labelledby="why-title">
+      <div class="container why-inner">
         <div class="why-media">
-          <img src="assets/team.jpg" alt="Ομάδα μεταφορών Σαμιόγλου">
+          <img src="assets/team.jpg" alt="Ομάδα μεταφορών Σαμιόγλου" width="800" height="600" loading="lazy" decoding="async">
         </div>
         <div class="why-copy">
           <p class="eyebrow">Γιατί να μας επιλέξετε</p>
-          <h2 id="why-title">Σας βγάζουμε από το άγχος της μετακόμισης.</h2>
+          <h2 id="why-title" class="display-h2">Σας βγάζουμε από το άγχος της μετακόμισης.</h2>
           <ul class="check-list">
-            <li>Προτείνουμε λύσεις ανάλογα με τις απαιτήσεις της μεταφοράς.</li>
-            <li>Προλαμβάνουμε προβλήματα και τα λύνουμε άμεσα.</li>
-            <li>Αναλαμβάνουμε από τη συσκευασία μέχρι την επανατοποθέτηση.</li>
-            <li>Σας δίνουμε σιγουριά για την ασφάλεια των αντικειμένων σας.</li>
+            <li>Άμεση «ανθρώπινη» επικοινωνία από την αρχή ως το τέλος.</li>
+            <li>Αναλαμβάνουμε τα πάντα — από τη συσκευασία μέχρι την επανατοποθέτηση.</li>
+            <li>Σιγουριά για την ασφάλεια των αντικειμένων σας.</li>
+            <li>Ολοκληρωμένη μεταφορά, χωρίς εκπλήξεις και χωρίς άγχος.</li>
           </ul>
-          <a class="button secondary" href="#contact">Μιλήστε με την ομάδα</a>
+          <a class="btn btn-secondary" href="#contact">Μιλήστε με την ομάδα</a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section areas" id="areas" aria-labelledby="areas-title">
-        <div class="section-heading compact">
+    <!-- ───── Coverage / Areas ──────────────────────────── -->
+    <section class="section areas reveal" id="areas" aria-labelledby="areas-title">
+      <div class="container">
+        <header class="section-heading">
           <p class="eyebrow">Περιοχές εξυπηρέτησης</p>
-          <h2 id="areas-title">Όλη η Αττική και, κατόπιν συνεννόησης, όλη η Ελλάδα.</h2>
+          <h2 id="areas-title" class="display-h2">Όλη η Αττική. Και κατόπιν συνεννόησης, όλη η Ελλάδα.</h2>
+        </header>
+
+        <!-- Coverage map (GreeceMap component from frontendmaxxing) -->
+        <div class="coverage-map-wrap">
+          <div id="coverage-map" class="gmap-sea" aria-label="Χάρτης κάλυψης"></div>
         </div>
+
         <div class="area-search">
-          <label for="area-filter">Αναζήτηση περιοχής</label>
-          <input id="area-filter" type="search" placeholder="π.χ. Χαλάνδρι, Γλυφάδα, Πειραιάς" data-area-filter>
+          <label for="area-filter" class="sr-only">Αναζήτηση περιοχής</label>
+          <input id="area-filter" type="search" placeholder="🔍 Βρείτε την περιοχή σας — π.χ. Κηφισιά, Γλυφάδα, Πειραιάς" data-area-filter>
+          <p class="area-result-count" data-area-count></p>
         </div>
-        <div class="area-tags" data-area-list aria-live="polite"></div>
-      </section>
 
-      <section class="section faq" id="faq" aria-labelledby="faq-title">
-        <div class="section-heading">
-          <p class="eyebrow">Εσείς ρωτάτε - εμείς απαντάμε</p>
-          <h2 id="faq-title">Οι βασικές πληροφορίες πριν ζητήσετε προσφορά.</h2>
+        <div class="area-regions" data-area-regions>
+          <!-- Filled by script.js -->
         </div>
+      </div>
+    </section>
+
+    <!-- ───── FAQ ───────────────────────────────────────── -->
+    <section class="section faq reveal" id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <header class="section-heading">
+          <p class="eyebrow">Εσείς ρωτάτε — εμείς απαντάμε</p>
+          <h2 id="faq-title" class="display-h2">Οι βασικές πληροφορίες πριν ζητήσετε προσφορά.</h2>
+        </header>
+
         <div class="faq-list">
-          <details open>
+          <details class="faq-item" open>
             <summary>Ποιες είναι οι πρώτες πληροφορίες που χρειάζεστε;</summary>
-            <p>Καλό είναι να γνωρίζετε τι θέλετε να μεταφέρετε, περίπου πόσα αντικείμενα υπάρχουν, τι είδους είναι, καθώς και την αφετηρία και τον προορισμό.</p>
+            <p>Τι θέλετε να μεταφέρετε, περίπου πόσα αντικείμενα, τι είδους είναι, καθώς και
+              την αφετηρία και τον προορισμό.</p>
           </details>
-          <details>
+          <details class="faq-item">
             <summary>Ποιες περιοχές εξυπηρετείτε;</summary>
-            <p>Εξυπηρετούμε όλη την Αττική και, κατόπιν συνεννόησης, όλη την Ελλάδα.</p>
+            <p>Πρωταρχικά όλη την Αττική. Κατόπιν συνεννόησης εξυπηρετούμε όλη την Ελλάδα.</p>
           </details>
-          <details>
-            <summary>Πόσο χρόνο χρειάζεστε για να δώσετε προσφορά;</summary>
-            <p>Εξαρτάται από τις πληροφορίες που θα μας δώσετε και από τον χρόνο που χρειάζεται για να εκτιμηθούν τα αντικείμενα. Στόχος μας είναι η γρηγορότερη δυνατή ανταπόκριση.</p>
-          </details>
-          <details>
-            <summary>Σε ποιους απευθύνεστε;</summary>
-            <p>Σε ιδιώτες, επαγγελματίες, φοιτητές και σε κάθε άνθρωπο που χρειάζεται να μεταφέρει κάτι με ασφάλεια.</p>
-          </details>
-          <details>
+          <details class="faq-item">
             <summary>Διαθέτετε ανυψωτικά μηχανήματα;</summary>
-            <p>Ναι. Διαθέτουμε σύγχρονο εξοπλισμό, ανυψωτικά μηχανήματα και φορτηγά διαφορετικών μεγεθών ανάλογα με τη μεταφορά.</p>
+            <p>Ναι. Σύγχρονος εξοπλισμός, ανυψωτικά μηχανήματα και φορτηγά διαφορετικών μεγεθών
+              ανάλογα με τη μεταφορά.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Αναλαμβάνετε ειδικές μεταφορές;</summary>
+            <p>Ναι — μουσικά όργανα, ιατρικά μηχανήματα, υπολογιστές, έργα τέχνης και
+              αντικείμενα μεγάλης αξίας, με τις κατάλληλες ειδικές συσκευασίες.</p>
           </details>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section contact" id="contact" aria-labelledby="contact-title">
-        <div>
+    <!-- ───── Contact / quote CTA ───────────────────────── -->
+    <section class="section contact reveal" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-inner">
+        <div class="contact-copy">
           <p class="eyebrow">Επικοινωνία</p>
-          <h2 id="contact-title">Λάβετε δωρεάν προσφορά για τη μεταφορά σας.</h2>
-          <p>Για οποιαδήποτε πληροφορία ή διευκρίνιση, επικοινωνήστε μαζί μας. Θα ακούσουμε τις ανάγκες σας και θα οργανώσουμε την πιο κατάλληλη λύση.</p>
+          <h2 id="contact-title" class="display-h2">Λάβετε δωρεάν προσφορά για τη μεταφορά σας.</h2>
+          <p>Για οποιαδήποτε πληροφορία ή διευκρίνιση, επικοινωνήστε μαζί μας. Θα ακούσουμε
+            τις ανάγκες σας και θα οργανώσουμε την πιο κατάλληλη λύση.</p>
+          <address class="contact-card">
+            <span class="contact-row"><strong>Διεύθυνση</strong>Πυρσόγιαννης 5, 104 46 · Αθήνα</span>
+            <a class="contact-row" href="tel:+302108611507"><strong>Τηλέφωνο</strong>+30 210 861 1507</a>
+            <a class="contact-row" href="mailto:info@samioglou.gr"><strong>Email</strong>info@samioglou.gr</a>
+            <span class="contact-row"><strong>Ωράριο</strong>Δευ–Παρ · 9:00–18:00</span>
+          </address>
         </div>
-        <address class="contact-card">
-          <span>Πυρσόγιαννης 5, 104 46</span>
-          <span>Αθήνα, Ελλάδα</span>
-          <a href="tel:+302108611507">Τηλ.: +30 210 861 1507</a>
-          <a href="mailto:info@samioglou.gr">E-Mail: info@samioglou.gr</a>
-        </address>
-      </section>
-    </main>
 
-    <footer class="footer">
-      <div>
+        <div class="contact-actions">
+          <a class="btn btn-primary btn-lg" href="#quote">Λάβετε δωρεάν προσφορά</a>
+          <a class="btn btn-secondary btn-lg" href="tel:+302108611507">📞 Καλέστε μας</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───── Footer ──────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
         <strong>Σαμιόγλου Χάρης</strong>
-        <span>Μεταφορές Μετακομίσεις</span>
+        <span>Μεταφορές · Μετακομίσεις</span>
       </div>
       <nav aria-label="Σύνδεσμοι υποσέλιδου">
         <a href="#services">Υπηρεσίες</a>
+        <a href="#areas">Περιοχές</a>
+        <a href="#faq">FAQ</a>
         <a href="#quote">Προσφορά</a>
-        <a href="#contact">Επικοινωνία</a>
       </nav>
-    </footer>
+      <div class="footer-contact">
+        <a href="tel:+302108611507">+30 210 861 1507</a>
+        <a href="mailto:info@samioglou.gr">info@samioglou.gr</a>
+      </div>
+    </div>
+  </footer>
 
-    <a class="mobile-call" href="tel:+302108611507">Καλέστε τώρα</a>
-    <script src="script.js"></script>
-  </body>
+  <!-- Mobile sticky call -->
+  <a class="mobile-call" href="tel:+302108611507">📞 Καλέστε τώρα</a>
+
+  <!-- ───── Font picker (iteration tool) ────────────────── -->
+  <div class="font-picker" data-font-picker>
+    <button class="font-picker-toggle" type="button" data-font-toggle aria-expanded="false" title="Font preset">Aa</button>
+    <div class="font-picker-panel" hidden>
+      <p class="font-picker-title">Δοκιμή γραμματοσειρών</p>
+      <button type="button" class="font-preset" data-preset="default">
+        <strong style="font-family: 'Plus Jakarta Sans', sans-serif;">Plus Jakarta + Manrope</strong>
+        <small>Default · modern grotesk</small>
+      </button>
+      <button type="button" class="font-preset" data-preset="gfs-didot">
+        <strong class="gf-gfs-didot">GFS Didot + Open Sans</strong>
+        <small>Greek-foundry, editorial</small>
+      </button>
+      <button type="button" class="font-preset" data-preset="athena-vkf">
+        <strong class="gf-athena-vkf">Athena VKF + Junicode</strong>
+        <small>Classical Greek</small>
+      </button>
+      <button type="button" class="font-preset" data-preset="junicode">
+        <strong class="gf-junicode">Junicode + Open Sans</strong>
+        <small>Traditional, deep polytonic</small>
+      </button>
+      <button type="button" class="font-preset" data-preset="ubuntu">
+        <strong class="gf-ubuntu">Ubuntu + Open Sans</strong>
+        <small>Workhorse, friendly</small>
+      </button>
+      <button type="button" class="font-preset" data-preset="open-sans">
+        <strong class="gf-open-sans">Open Sans (both)</strong>
+        <small>Safe, neutral</small>
+      </button>
+    </div>
+  </div>
+
+  <!-- ───── Scripts (all deferred — execute in document order after parse) ── -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="components/greece-map-data.js" defer></script>
+  <script src="components/greece-map.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
 </html>
