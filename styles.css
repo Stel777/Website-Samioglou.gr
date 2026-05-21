@@ -2015,8 +2015,8 @@ a.contact-row:hover { color: var(--primary); }
   /* Hero */
   .hero h1 { font-size: clamp(2.2rem, 9vw, 3rem); }
   .hero-actions .btn { width: 100%; }
-  /* No video on phones (poster only) → no watermark to cover → drop the boxes for a cleaner hero */
-  .hero-boxes { display: none; }
+  /* Video plays on phones now → keep the boxes to cover the watermark (bottom-right) */
+  .hero-boxes { display: block; width: clamp(160px, 52vw, 240px); height: clamp(130px, 30vh, 200px); }
   .hero-form { padding: 1.1rem 1rem; }
   .hero-form .field-pair { grid-template-columns: 1fr; }
 

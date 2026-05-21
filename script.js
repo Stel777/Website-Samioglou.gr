@@ -623,21 +623,8 @@
     const v2 = document.querySelector('.hero-vid-2');
     if (!v1 || !v2) return;
 
-    // On phones, skip the videos entirely — the poster image carries the hero.
-    // Saves ~5.6MB of download + battery, and avoids autoplay jank on low-end
-    // devices and cellular data. Desktop/tablet keep the full cinematic sequence.
-    const isPhone = window.matchMedia('(max-width: 768px)').matches;
-    if (isPhone) {
-      [v1, v2].forEach((v) => {
-        v.removeAttribute('autoplay');
-        v.setAttribute('preload', 'none');
-        try { v.pause(); } catch (e) {}
-        const src = v.querySelector('source');
-        if (src) { src.removeAttribute('src'); }
-        try { v.load(); } catch (e) {}   // abort any in-flight fetch; poster stays
-      });
-      return;
-    }
+    // Video plays on every device, including phones — the cinematic sequence is
+    // the centerpiece. (The poster image still covers first paint / slow networks.)
 
     // Clip 1 ended → fade in clip 2 and play it
     v1.addEventListener('ended', () => {
