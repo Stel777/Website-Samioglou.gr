@@ -266,18 +266,24 @@
         { sel: '.popular-chip',            from: 'start', amount: 0.35 },
       ];
 
-      /* Process timeline: line draws, markers pop in, content fades up */
+      /* Process timeline: line draws, markers pop in, content fades up.
+         Desktop draws the line horizontally (scaleX); mobile is vertical (scaleY). */
       const timeline = document.querySelector('[data-timeline]');
       if (timeline) {
+        const vertical = window.matchMedia('(max-width: 720px)').matches;
+        const axis = vertical ? 'scaleY' : 'scaleX';
         gsap.set('.timeline-marker', { scale: 0, autoAlpha: 0 });
         gsap.set('.timeline-content', { y: 16, autoAlpha: 0 });
-        gsap.set('.timeline-progress', { scaleX: 0 });
+        gsap.set('.timeline-progress', {
+          [axis]: 0,
+          transformOrigin: vertical ? 'top center' : 'left center',
+        });
 
         const tl = gsap.timeline({
           scrollTrigger: { trigger: timeline, start: 'top 78%', once: true },
         });
         tl.to('.timeline-progress', {
-            scaleX: 1,
+            [axis]: 1,
             duration: 1.1,
             ease: 'power2.inOut',
           })
@@ -616,6 +622,22 @@
     const v1 = document.querySelector('.hero-vid-1');
     const v2 = document.querySelector('.hero-vid-2');
     if (!v1 || !v2) return;
+
+    // On phones, skip the videos entirely — the poster image carries the hero.
+    // Saves ~5.6MB of download + battery, and avoids autoplay jank on low-end
+    // devices and cellular data. Desktop/tablet keep the full cinematic sequence.
+    const isPhone = window.matchMedia('(max-width: 768px)').matches;
+    if (isPhone) {
+      [v1, v2].forEach((v) => {
+        v.removeAttribute('autoplay');
+        v.setAttribute('preload', 'none');
+        try { v.pause(); } catch (e) {}
+        const src = v.querySelector('source');
+        if (src) { src.removeAttribute('src'); }
+        try { v.load(); } catch (e) {}   // abort any in-flight fetch; poster stays
+      });
+      return;
+    }
 
     // Clip 1 ended → fade in clip 2 and play it
     v1.addEventListener('ended', () => {

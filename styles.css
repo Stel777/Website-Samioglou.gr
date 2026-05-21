@@ -427,8 +427,8 @@ a.topbar-link:focus-visible {
 /* ── HERO ────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 100svh;
   min-height: 100vh;
+  min-height: 100svh;   /* svh wins where supported — content never hides behind mobile browser chrome */
   overflow: hidden;
   color: #fff;
   isolation: isolate;
@@ -438,6 +438,8 @@ a.topbar-link:focus-visible {
   inset: 0;
   z-index: -3;
   overflow: hidden;
+  /* Poster fallback: if the <video> shows nothing (e.g. source removed on mobile) the bg carries it */
+  background: #0c1730 url("assets/moving-hero.jpg") center / cover no-repeat;
 }
 .hero-video video,
 .hero-video img {
@@ -468,8 +470,8 @@ a.topbar-link:focus-visible {
 .hero-inner {
   position: relative;
   z-index: 1;
-  min-height: 100svh;
   min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(340px, 420px);
   gap: clamp(2rem, 5vw, 4rem);
@@ -554,9 +556,13 @@ a.topbar-link:focus-visible {
 @media (max-width: 920px) {
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 1.8rem;
-    padding-top: clamp(7rem, 14vh, 9rem);
+    gap: 1.6rem;
+    align-content: center;  /* center stacked content when it fits, flow when tall */
+    padding-top: clamp(6.5rem, 12vh, 8.5rem);
+    padding-bottom: clamp(2.5rem, 6vh, 4rem);
   }
+  /* On touch/stacked layout the hero copy column shouldn't cap its width */
+  .hero-copy { max-width: none; }
 }
 .hero-boxes,
 .hero-vignette { will-change: transform, opacity; }
@@ -1945,7 +1951,7 @@ a.contact-row:hover { color: var(--primary); }
 }
 
 @media (max-width: 640px) {
-  body { padding-bottom: 76px; }
+  body { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 
   /* Topbar: hide the muted hours pill on tiny screens, keep phone + mail */
   .topbar { font-size: 0.78rem; }
@@ -1958,13 +1964,16 @@ a.contact-row:hover { color: var(--primary); }
   .nav { min-height: 64px; }
 
   /* Hero */
-  .hero-inner { padding-top: clamp(6.5rem, 14vh, 8.5rem); }
   .hero h1 { font-size: clamp(2.2rem, 9vw, 3rem); }
   .hero-actions .btn { width: 100%; }
-  .hero-boxes { width: 80vw; right: -16vw; bottom: 4vh; height: 280px; }
-  .box-4, .box-5 { display: none; }
+  /* No video on phones (poster only) → no watermark to cover → drop the boxes for a cleaner hero */
+  .hero-boxes { display: none; }
   .hero-form { padding: 1.1rem 1rem; }
   .hero-form .field-pair { grid-template-columns: 1fr; }
+
+  /* Coverage map — shorter on phones so it doesn't eat the whole viewport */
+  .coverage-map-wrap { padding: 1rem 0.6rem 0.8rem; }
+  .coverage-map-wrap .gmap svg { min-height: 300px; max-height: 64vh; }
 
   /* Stats */
   .stats-strip-inner { grid-template-columns: 1fr; gap: 1.4rem; }
@@ -2010,11 +2019,11 @@ a.contact-row:hover { color: var(--primary); }
     z-index: 55;
     left: 0.75rem;
     right: 0.75rem;
-    bottom: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     min-height: 54px;
     color: #fff;
     background: var(--primary);
@@ -2023,6 +2032,7 @@ a.contact-row:hover { color: var(--primary); }
     font-weight: 800;
     font-size: 1rem;
   }
+  .mobile-call .btn-icon { width: 20px; height: 20px; margin: 0; }
 
   .font-picker { bottom: 90px; right: 0.75rem; }
   .font-picker-toggle { width: 48px; height: 48px; font-size: 1rem; }
@@ -2047,6 +2057,23 @@ a.contact-row:hover { color: var(--primary); }
   .service-icons { grid-template-columns: repeat(2, 1fr); }
   .mosaic { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 240px; }
   .stats-strip-inner { grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+}
+
+/* ── Touch devices: reveal hover-only affordances ────────── */
+@media (hover: none) {
+  /* The mosaic arrow chip only appears on :hover — on touch it never would.
+     Show it permanently (slightly smaller) so the tiles read as tappable. */
+  .tile-arrow {
+    opacity: 1;
+    transform: none;
+  }
+  /* Tiles can't hover-zoom on touch; keep the gradient strong for legibility */
+  .tile-shade {
+    background: linear-gradient(180deg, rgba(15,28,46,0.05) 20%, rgba(15,28,46,0.55) 60%, rgba(15,28,46,0.96) 100%);
+  }
+  /* Popular chips + area pills give an :active tap feedback instead of hover */
+  .popular-chip:active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .area-list span:active { background: rgba(14,79,134,0.12); }
 }
 
 /* ── Reduced motion ──────────────────────────────────────── */
