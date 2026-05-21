@@ -1940,7 +1940,12 @@ a.contact-row:hover { color: var(--primary); }
   /* Logo + hamburger always render on the white bar now */
   .site-header .brand img { filter: none; }
 
-  .nav { grid-template-columns: 1fr auto; min-height: 66px; }  /* logo left, hamburger right */
+  /* nav is the positioning anchor for the dropdown */
+  .nav {
+    position: relative;
+    grid-template-columns: 1fr auto;  /* logo left, hamburger right */
+    min-height: 66px;
+  }
   .nav-menu, .nav-cta { display: none; }
 
   /* Clean borderless hamburger with dark bars on the white header */
@@ -1951,19 +1956,22 @@ a.contact-row:hover { color: var(--primary); }
   }
   .nav-toggle span:not(.sr-only) { background: var(--ink); }
 
-  /* Dropdown panel */
+  /* Dropdown panel — anchored to the bottom of the nav bar, full nav width */
   .nav-menu.is-open {
     display: grid;
     gap: 0.15rem;
     position: absolute;
-    top: calc(100% + 0.4rem);
-    left: 1rem;
-    right: 1rem;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    width: auto;
+    justify-self: stretch;   /* override the desktop justify-self: center */
     padding: 0.5rem;
     background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-float);
+    z-index: 70;
   }
   /* Force dark links — beats the `:not(.is-scrolled) .nav-menu a { color:#fff }`
      rule (same specificity, later in source). This was the white-on-white bug. */
