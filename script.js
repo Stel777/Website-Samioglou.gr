@@ -617,30 +617,44 @@
     });
   }
 
-  /* ── Hero video sequence: drives → doors open → loops back ─ */
+  /* ── Hero video sequence: drives → doors open → loops back ─
+     Plays on every device. Robust looping: a rejected play() (common on the
+     clip handoff) used to stall the sequence on the last frame, which looked
+     like "not looping". Now we retry and also catch a near-end timeupdate as a
+     fallback in case the 'ended' event is missed (some mobile browsers drop it). */
   function initHeroVideoSequence() {
     const v1 = document.querySelector('.hero-vid-1');
     const v2 = document.querySelector('.hero-vid-2');
     if (!v1 || !v2) return;
 
-    // Video plays on every device, including phones — the cinematic sequence is
-    // the centerpiece. (The poster image still covers first paint / slow networks.)
+    const play = (v) => {
+      try { const p = v.play(); if (p && p.catch) p.catch(() => setTimeout(() => { try { v.play(); } catch (e) {} }, 120)); }
+      catch (e) {}
+    };
 
-    // Clip 1 ended → fade in clip 2 and play it
-    v1.addEventListener('ended', () => {
-      v1.classList.add('is-faded');
-      v2.classList.add('is-active');
-      v2.currentTime = 0;
-      v2.play().catch(() => {});
+    // Swap to `active`, fade out `faded`, restart `active` from the top.
+    function swap(active, faded) {
+      active.classList.add('is-active');
+      active.classList.remove('is-faded');
+      faded.classList.add('is-faded');
+      faded.classList.remove('is-active');
+      try { active.currentTime = 0; } catch (e) {}
+      play(active);
+    }
+
+    const advance = (from, to) => { if (!from._switched) { from._switched = true; swap(to, from); } };
+
+    [ [v1, v2], [v2, v1] ].forEach(([from, to]) => {
+      from.addEventListener('play', () => { from._switched = false; });
+      from.addEventListener('ended', () => advance(from, to));
+      // Fallback: if 'ended' is dropped, trigger the swap ~80ms before the end
+      from.addEventListener('timeupdate', () => {
+        if (from.duration && from.currentTime >= from.duration - 0.08) advance(from, to);
+      });
     });
 
-    // Clip 2 ended → fade back to clip 1, restart
-    v2.addEventListener('ended', () => {
-      v2.classList.remove('is-active');
-      v1.classList.remove('is-faded');
-      v1.currentTime = 0;
-      v1.play().catch(() => {});
-    });
+    // Make sure clip 1 is actually rolling (covers autoplay quirks after a source swap)
+    if (v1.paused) play(v1);
   }
 
   /* ── Coverage map (GreeceMap from frontendmaxxing) ───────── */
