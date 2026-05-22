@@ -113,6 +113,20 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  /* ── Mobile sticky call: hidden over the hero, shown once scrolled past ── */
+  function initMobileCallReveal() {
+    const call = $('.mobile-call');
+    const hero = $('#top') || $('.hero');
+    if (!call || !hero) return;
+    const onScroll = () => {
+      // Reveal once the user has scrolled ~70% of the hero (i.e. clearly away from it).
+      call.classList.toggle('is-visible', window.scrollY > hero.offsetHeight * 0.7);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  }
+
   /* ── Business hours pill (Athens time, Mon-Fri 09:00-18:00) ── */
   function initBusinessStatus() {
     const status = $('[data-business-status]');
@@ -795,6 +809,7 @@
   function boot() {
     initMobileNav();
     initHeaderScroll();
+    initMobileCallReveal();
     initBusinessStatus();
     initHeroAnchors();
     initHeroVideoSequence();
